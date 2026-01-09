@@ -1,0 +1,231 @@
+/* ========================================
+   工具详情页通用样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --detail-bg: #F8F9FB;
+    --detail-card-bg: #FFFFFF;
+    --detail-text-primary: #1D1D1F;
+    --detail-text-secondary: #86868B;
+    --detail-accent: #007AFF;
+    --detail-success: #10B981;
+    --detail-warning: #F59E0B;
+    --detail-danger: #EF4444;
+    --detail-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --detail-radius: 16px;
+    --detail-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --detail-input-bg: #F5F5F7;
+    --detail-hover-bg: #F0F0F5;
+}
+
+[data-theme="dark"] {
+    --detail-bg: #000000;
+    --detail-card-bg: #1C1C1E;
+    --detail-text-primary: #FFFFFF;
+    --detail-text-secondary: #98989D;
+    --detail-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --detail-input-bg: #2C2C2E;
+    --detail-hover-bg: #3A3A3C;
+}
+
+body {
+    background: var(--detail-bg);
+    color: var(--detail-text-primary);
+    transition: background 0.3s, color 0.3s;
+}
+
+.tool-detail-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px 16px 120px;
+}
+
+/* 头部 */
+.tool-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 8px 0;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--detail-card-bg);
+    box-shadow: var(--detail-shadow);
+    transition: var(--detail-transition);
+}
+
+.back-btn:hover {
+    transform: scale(1.05);
+}
+
+.tool-detail-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--detail-text-primary);
+}
+
+/* 搜索框 */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--detail-card-bg);
+    border-radius: var(--detail-radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--detail-shadow);
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: var(--detail-text-primary);
+    background: transparent;
+}
+
+.search-box input::placeholder {
+    color: var(--detail-text-secondary);
+}
+
+/* GI 等级说明 */
+.gi-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: var(--detail-card-bg);
+    border-radius: var(--detail-radius);
+    box-shadow: var(--detail-shadow);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--detail-text-secondary);
+}
+
+.legend-item .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.legend-item.low .dot { background: var(--detail-success); }
+.legend-item.medium .dot { background: var(--detail-warning); }
+.legend-item.high .dot { background: var(--detail-danger); }
+
+/* 分类标签 */
+.category-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.category-tab {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px;
+    background: var(--detail-card-bg);
+    color: var(--detail-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--detail-transition);
+    box-shadow: var(--detail-shadow);
+}
+
+.category-tab.active {
+    background: var(--detail-accent);
+    color: white;
+}
+
+.category-tab:hover:not(.active) {
+    background: var(--detail-hover-bg);
+}
+
+/* 食物列表 */
+.food-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.food-item {
+    background: var(--detail-card-bg);
+    border-radius: var(--detail-radius);
+    padding: 16px;
+    box-shadow: var(--detail-shadow);
+    transition: var(--detail-transition);
+}
+
+.food-item:hover {
+    transform: translateX(4px);
+}
+
+.food-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.food-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--detail-text-primary);
+}
+
+.gi-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.gi-badge.low {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--detail-success);
+}
+
+.gi-badge.medium {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--detail-warning);
+}
+
+.gi-badge.high {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--detail-danger);
+}
+
+.food-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--detail-text-secondary);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--detail-text-secondary);
+}

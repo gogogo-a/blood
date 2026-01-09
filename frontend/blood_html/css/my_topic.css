@@ -1,0 +1,320 @@
+/* ========================================
+   我的话题页面样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --mytopic-bg: #F8F9FB;
+    --mytopic-card: #FFFFFF;
+    --mytopic-text: #1D1D1F;
+    --mytopic-text-secondary: #86868B;
+    --mytopic-input-bg: #F5F5F7;
+    --mytopic-border: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] {
+    --mytopic-bg: #000000;
+    --mytopic-card: #1C1C1E;
+    --mytopic-text: #FFFFFF;
+    --mytopic-text-secondary: #98989D;
+    --mytopic-input-bg: #2C2C2E;
+    --mytopic-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: var(--mytopic-bg);
+    color: var(--mytopic-text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* 社区页面容器 */
+.community-container {
+    margin-top: 24px;
+    padding: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 320px;
+    padding-bottom: 100px;
+}
+
+/* 顶部导航样式 */
+.top-nav {
+    display: flex;
+    margin-bottom: 24px;
+    gap: 8px;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    padding: 10px 18px;
+    cursor: pointer;
+    color: var(--mytopic-text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+    color: var(--mytopic-text);
+}
+
+.nav-button.active {
+    color: #007AFF;
+    border-bottom: 2px solid #007AFF;
+}
+
+/* 搜索栏样式 */
+.search-container {
+    display: flex;
+    margin-bottom: 24px;
+    gap: 12px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 14px;
+    background: var(--mytopic-card);
+    font-size: 15px;
+    color: var(--mytopic-text);
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .search-input {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-input:focus {
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+.search-input::placeholder {
+    color: var(--mytopic-text-secondary);
+}
+
+.search-button {
+    background: var(--mytopic-input-bg);
+    border: none;
+    padding: 0 18px;
+    border-radius: 14px;
+    cursor: pointer;
+    color: var(--mytopic-text-secondary);
+    transition: all 0.2s ease;
+}
+
+.search-button:hover {
+    background: var(--mytopic-border);
+    color: #007AFF;
+}
+
+/* 创建话题按钮 */
+.create-post-container {
+    margin-bottom: 24px;
+    text-align: right;
+}
+
+.create-post-button {
+    background: #007AFF;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.create-post-button:hover {
+    background: #0056CC;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.create-post-button:active {
+    transform: scale(0.97);
+}
+
+/* 话题列表 */
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.post-item {
+    background-color: var(--mytopic-card);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--mytopic-border);
+}
+
+[data-theme="dark"] .post-item {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.post-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.03),
+        0 12px 24px rgba(0, 0, 0, 0.06);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.post-header-link {
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.post-header-link:hover {
+    text-decoration: none;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+}
+
+.author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+    border: 2px solid var(--mytopic-input-bg);
+}
+
+.author-name {
+    font-weight: 600;
+    color: var(--mytopic-text);
+    font-size: 15px;
+}
+
+.post-time {
+    color: var(--mytopic-text-secondary);
+    font-size: 13px;
+    font-feature-settings: 'tnum';
+}
+
+.post-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--mytopic-text);
+    line-height: 1.4;
+}
+
+.post-content {
+    color: var(--mytopic-text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.6;
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-stats {
+    display: flex;
+    gap: 20px;
+    color: var(--mytopic-text-secondary);
+    font-size: 13px;
+}
+
+.post-stats i {
+    margin-right: 6px;
+    color: var(--mytopic-text-secondary);
+    transition: color 0.2s ease;
+}
+
+.post-item:hover .post-stats i {
+    color: #007AFF;
+}
+
+/* 底部导航栏占位 */
+.footer-placeholder {
+    height: 80px;
+    width: 100%;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .community-container {
+        padding: 16px;
+        margin-top: 16px;
+    }
+
+    .top-nav {
+        gap: 4px;
+    }
+
+    .nav-button {
+        padding: 8px 14px;
+        font-size: 14px;
+    }
+
+    .search-input {
+        font-size: 14px;
+        padding: 12px 16px;
+    }
+
+    .create-post-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .post-item {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .post-title {
+        font-size: 15px;
+    }
+
+    .post-content {
+        font-size: 13px;
+    }
+
+    .post-stats {
+        font-size: 12px;
+        gap: 16px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .community-container {
+        padding: 24px;
+    }
+}

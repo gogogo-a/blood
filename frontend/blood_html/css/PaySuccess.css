@@ -1,0 +1,208 @@
+/* ========================================
+   支付成功页面样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --primary-color: #007AFF;
+    --secondary-color: #F8F9FB;
+    --accent-color: #0056CC;
+    --success-color: #1E8E3E;
+    --error-color: #C5221F;
+    --paysuccess-bg: #F8F9FB;
+    --paysuccess-card: #FFFFFF;
+    --paysuccess-text: #1D1D1F;
+}
+
+[data-theme="dark"] {
+    --paysuccess-bg: #000000;
+    --paysuccess-card: #1C1C1E;
+    --paysuccess-text: #FFFFFF;
+    --secondary-color: #2C2C2E;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background: var(--paysuccess-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s;
+}
+
+.success-container {
+    background: var(--paysuccess-card);
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.04),
+        0 20px 40px rgba(0, 0, 0, 0.04);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    animation: fadeIn 0.6s ease-out;
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .success-container {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.checkmark {
+    width: 80px;
+    height: 80px;
+    background: var(--success-color);
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    position: relative;
+    animation: scaleUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.checkmark::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 28px;
+    height: 14px;
+    border: 4px solid white;
+    border-top: none;
+    border-right: none;
+    transform: translate(-50%, -60%) rotate(-45deg);
+}
+
+h1 {
+    color: var(--paysuccess-text);
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.amount {
+    font-size: 36px;
+    color: var(--paysuccess-text);
+    margin: 1.5rem 0;
+    font-weight: 700;
+    font-feature-settings: 'tnum';
+}
+
+.return-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 2rem;
+}
+
+.return-btn:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+}
+
+.return-btn:active {
+    transform: scale(0.98);
+}
+
+/* 错误模式 */
+.error-mode .checkmark {
+    background: var(--error-color);
+}
+
+.error-mode h1 {
+    color: var(--error-color);
+}
+
+.contact-info {
+    color: var(--error-color);
+    font-weight: 600;
+    margin: 1rem 0;
+    font-size: 14px;
+}
+
+/* 加载动画 */
+.loading {
+    animation: rotate 0.8s linear infinite;
+    width: 44px;
+    height: 44px;
+    border: 3px solid var(--secondary-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    margin: 24px auto;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0);
+    }
+    80% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .success-container {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .amount {
+        font-size: 28px;
+    }
+
+    .return-btn {
+        padding: 0.875rem 2rem;
+        font-size: 15px;
+    }
+
+    .checkmark {
+        width: 70px;
+        height: 70px;
+    }
+
+    .checkmark::after {
+        width: 24px;
+        height: 12px;
+    }
+}

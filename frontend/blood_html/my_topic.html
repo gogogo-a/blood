@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社区 - 我的APP</title>
+    <link rel="stylesheet" href="css/my_topic.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <script src="js/theme.js"></script>
+</head>
+<body>
+    <!-- 主要内容区域 -->
+    <main class="community-container">
+        <!-- 顶部导航 -->
+        <div class="top-nav">
+            <button class="nav-button active" id="my-topics">我发布的话题</button>
+            <button class="nav-button" id="liked-topics">我喜欢的话题</button>
+        </div>
+
+        <!-- 搜索栏 -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="搜索话题、作者...">
+            <button class="search-button">
+                <svg class="icon" viewBox="0 0 24 24" width="30" height="30" fill="#86868B">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 创建话题按钮 -->
+        <div class="create-post-container">
+            <button class="create-post-button" onclick="window.location.href='create_topic.html'">创建话题</button>
+        </div>
+
+        <!-- 话题列表 -->
+        <div class="posts-container">
+            <!-- 话题项将通过 JavaScript 动态添加 -->
+        </div>
+    </main>
+
+    <!-- 底部导航栏占位 -->
+    <div class="footer-placeholder"></div>
+    <script src="js/config.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/my_topic.js"></script>
+</body>
+</html>

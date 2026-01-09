@@ -1,0 +1,2318 @@
+/* ========================================
+   极简高级血糖管理系统样式
+   ======================================== */
+
+/* 1. 全局样式与深色模式变量 */
+:root {
+    --index-bg: #F8F9FB;
+    --index-card: #FFFFFF;
+    --index-card-hover: #F5F5F7;
+    --index-text: #1D1D1F;
+    --index-text-secondary: #86868B;
+    --index-border: rgba(0, 0, 0, 0.04);
+    --index-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] {
+    --index-bg: #000000;
+    --index-card: #1C1C1E;
+    --index-card-hover: #2C2C2E;
+    --index-text: #FFFFFF;
+    --index-text-secondary: #98989D;
+    --index-border: rgba(255, 255, 255, 0.1);
+    --index-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--index-bg);
+    color: var(--index-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* 高端质感背景：噪声纹理叠加 */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+[data-theme="dark"] body::before {
+    opacity: 0.05;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px 100px;
+}
+
+/* ========================================
+   AI 智能问候卡片
+   ======================================== */
+.ai-greeting-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.08) 0%, rgba(88, 86, 214, 0.06) 100%);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(0, 122, 255, 0.1);
+    animation: greetingFadeIn 0.6s ease;
+}
+
+@keyframes greetingFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.greeting-icon {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
+}
+
+.greeting-icon svg {
+    fill: white;
+}
+
+.greeting-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.greeting-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1D1D1F;
+    line-height: 1.5;
+    margin-bottom: 4px;
+}
+
+.greeting-sub {
+    font-size: 13px;
+    color: #86868B;
+}
+
+/* ========================================
+   每日健康知识卡片
+   ======================================== */
+.health-tip-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.health-tip-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.tip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.tip-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tip-icon {
+    font-size: 18px;
+}
+
+.tip-refresh-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.tip-refresh-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(180deg);
+}
+
+.tip-content {
+    margin-bottom: 16px;
+}
+
+.tip-text {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.tip-footer {
+    display: flex;
+    gap: 12px;
+}
+
+.tip-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 20px;
+    color: #FFFFFF;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tip-action-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.tip-action-btn.liked {
+    background: rgba(255, 59, 48, 0.3);
+}
+
+.tip-action-btn.liked svg {
+    fill: #FF3B30;
+}
+
+/* 健康知识卡片刷新动画 */
+@keyframes tipRefresh {
+    0% {
+        opacity: 0.5;
+        transform: scale(0.98);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.01);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========================================
+   快捷入口栏
+   ======================================== */
+.quick-entry-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.quick-entry-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 8px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.quick-entry-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.quick-entry-item:active {
+    transform: scale(0.96);
+}
+
+.entry-icon {
+    font-size: 26px;
+}
+
+.entry-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1D1D1F;
+}
+
+/* 打字机效果 */
+.typing-cursor::after {
+    content: '|';
+    animation: blink 1s infinite;
+    color: #007AFF;
+}
+
+/* ========================================
+   血糖目标卡片
+   ======================================== */
+.goal-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.goal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1D1D1F;
+}
+
+.goal-icon {
+    font-size: 20px;
+}
+
+.goal-edit-btn {
+    padding: 6px 14px;
+    background: #F5F5F7;
+    border: none;
+    border-radius: 16px;
+    font-size: 13px;
+    color: #007AFF;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.goal-edit-btn:hover {
+    background: rgba(0, 122, 255, 0.1);
+}
+
+.goal-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.goal-ring-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
+
+.goal-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.goal-ring-bg {
+    fill: none;
+    stroke: #F2F2F7;
+    stroke-width: 8;
+}
+
+.goal-ring-progress {
+    fill: none;
+    stroke: #34C759;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 264;
+    stroke-dashoffset: 264;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.goal-ring-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.goal-percent {
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    color: #34C759;
+}
+
+.goal-label {
+    font-size: 11px;
+    color: #86868B;
+}
+
+.goal-stats {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.goal-stat {
+    text-align: center;
+}
+
+.goal-stat .stat-num {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1D1D1F;
+}
+
+.goal-stat .stat-label {
+    font-size: 11px;
+    color: #86868B;
+}
+
+/* 目标设置弹窗 */
+.goal-modal-content {
+    max-width: 360px;
+}
+
+.goal-modal-content h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.range-inputs input {
+    flex: 1;
+    text-align: center;
+}
+
+.range-separator {
+    color: #86868B;
+    font-weight: 500;
+}
+
+.goal-days-selector {
+    display: flex;
+    gap: 10px;
+}
+
+.day-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #E5E5EA;
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #1D1D1F;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.day-btn:hover {
+    border-color: #007AFF;
+}
+
+.day-btn.active {
+    background: #007AFF;
+    border-color: #007AFF;
+    color: #FFFFFF;
+}
+
+.save-goal-btn {
+    width: 100%;
+    padding: 14px;
+    background: #007AFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+}
+
+.save-goal-btn:hover {
+    background: #0056CC;
+}
+
+/* ========================================
+   用药提醒卡片
+   ======================================== */
+.medication-reminder-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.reminder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.reminder-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1D1D1F;
+}
+
+.reminder-icon {
+    font-size: 20px;
+}
+
+.reminder-date {
+    font-size: 13px;
+    color: #86868B;
+}
+
+.reminder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reminder-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #F8F9FB;
+    border-radius: 14px;
+    transition: all 0.2s;
+}
+
+.reminder-item.completed {
+    background: rgba(52, 199, 89, 0.08);
+}
+
+.reminder-item.upcoming {
+    background: rgba(255, 149, 0, 0.08);
+    border: 1px solid rgba(255, 149, 0, 0.2);
+}
+
+.reminder-time-badge {
+    min-width: 56px;
+    padding: 6px 10px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.reminder-time-badge .time {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1D1D1F;
+}
+
+.reminder-time-badge .period {
+    font-size: 10px;
+    color: #86868B;
+}
+
+.reminder-info {
+    flex: 1;
+}
+
+.reminder-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1D1D1F;
+    margin-bottom: 2px;
+}
+
+.reminder-dosage {
+    font-size: 12px;
+    color: #86868B;
+}
+
+.reminder-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-status.done {
+    background: #34C759;
+    color: #FFFFFF;
+}
+
+.reminder-status.pending {
+    background: #F5F5F7;
+    color: #86868B;
+}
+
+.reminder-status.pending:hover {
+    background: #34C759;
+    color: #FFFFFF;
+}
+
+.reminder-status svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.reminder-empty {
+    text-align: center;
+    padding: 30px 20px;
+    color: #86868B;
+}
+
+.reminder-empty .empty-icon {
+    display: block;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.reminder-empty .empty-text {
+    font-size: 14px;
+}
+
+/* ========================================
+   快捷记录浮动按钮
+   ======================================== */
+.fab-container {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 12px;
+}
+
+.fab-main {
+    width: 56px;
+    height: 56px;
+    border: none;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fab-main:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(0, 122, 255, 0.5);
+}
+
+.fab-main:active {
+    transform: scale(0.95);
+}
+
+.fab-icon-close {
+    display: none;
+}
+
+.fab-container.open .fab-icon-add {
+    display: none;
+}
+
+.fab-container.open .fab-icon-close {
+    display: block;
+}
+
+.fab-container.open .fab-main {
+    background: linear-gradient(135deg, #FF3B30 0%, #FF9500 100%);
+    transform: rotate(0deg);
+}
+
+.fab-menu {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fab-container.open .fab-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.fab-item {
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transition: all 0.2s;
+    position: relative;
+}
+
+.fab-item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.fab-item:active {
+    transform: scale(0.95);
+}
+
+.fab-item-icon {
+    font-size: 22px;
+}
+
+.fab-item::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 60px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+}
+
+.fab-item:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 浮动按钮动画延迟 */
+.fab-container.open .fab-item:nth-child(1) { transition-delay: 0.05s; }
+.fab-container.open .fab-item:nth-child(2) { transition-delay: 0.1s; }
+.fab-container.open .fab-item:nth-child(3) { transition-delay: 0.15s; }
+.fab-container.open .fab-item:nth-child(4) { transition-delay: 0.2s; }
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ========================================
+   AI 健康洞察卡片
+   ======================================== */
+.ai-insight-card {
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    animation: insightSlideIn 0.5s ease 0.3s both;
+}
+
+@keyframes insightSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.insight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.insight-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.insight-time {
+    font-size: 12px;
+    color: #AEAEB2;
+}
+
+.insight-content {
+    font-size: 14px;
+    color: #1D1D1F;
+    line-height: 1.6;
+}
+
+.insight-content .highlight {
+    color: #007AFF;
+    font-weight: 500;
+}
+
+.insight-content .warning {
+    color: #FF9500;
+    font-weight: 500;
+}
+
+.insight-content .success {
+    color: #34C759;
+    font-weight: 500;
+}
+
+/* 2. Header & Info-card (毛玻璃质感) */
+.header {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 24px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.user-info {
+    display: flex;
+    gap: 16px;
+}
+
+.info-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+}
+
+.info-card h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #86868B;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-card h3 svg {
+    flex-shrink: 0;
+}
+
+.info-card .value {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1D1D1F;
+    letter-spacing: -0.5px;
+}
+
+/* 状态标签 */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 8px;
+}
+
+.status-normal {
+    background: #E6F4EA;
+    color: #1E8E3E;
+}
+
+.status-warning {
+    background: #FEF7E0;
+    color: #B06000;
+}
+
+.status-danger {
+    background: #FEEAE6;
+    color: #C5221F;
+}
+
+.status-tip {
+    font-size: 12px;
+    color: #86868B;
+    margin-top: 6px;
+}
+
+
+/* 3. Card (组件容器) */
+.main-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.card {
+    background: #FFFFFF;
+    padding: 32px;
+    border-radius: 20px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    opacity: 0;
+    transform: scale(0.98);
+    animation: cardFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* 交错淡入动画 */
+@keyframes cardFadeIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.3s; }
+
+.card h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1D1D1F;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.card h2 svg {
+    flex-shrink: 0;
+}
+
+.card h2 span {
+    flex: 1;
+    color: #1D1D1F !important;
+}
+
+/* 胶囊按钮 - 扁平化风格 */
+.add-btn1,
+.add-btn3,
+.add-medication-btn,
+[class*="add-btn"] {
+    background: #007AFF;
+    color: #FFFFFF !important;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+}
+
+.add-btn1:hover,
+.add-btn3:hover,
+.add-medication-btn:hover,
+[class*="add-btn"]:hover {
+    background: #0056CC;
+    transform: scale(1.02);
+}
+
+.add-btn1:active,
+.add-btn3:active,
+.add-medication-btn:active {
+    transform: scale(0.98);
+}
+
+/* 4. Modal (模态框) */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #FFFFFF;
+    padding: 32px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1D1D1F;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.close-btn {
+    float: right;
+    font-size: 24px;
+    color: #86868B;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #1D1D1F;
+}
+
+/* 表单样式 */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1D1D1F;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 12px;
+    background: #F2F2F7;
+    font-size: 16px;
+    color: #1D1D1F;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    background: #FFFFFF;
+    box-shadow: 0 0 0 1px #007AFF;
+}
+
+.form-group input::placeholder {
+    color: #86868B;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background: #007AFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button[type="submit"]:hover {
+    background: #0056CC;
+}
+
+button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+
+/* 5. 列表与记录 */
+.blood-sugar-log-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.blood-sugar-log-container .log-entry {
+    flex: 1;
+    min-width: 140px;
+    background: #F8F9FB;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: all 0.2s;
+}
+
+.blood-sugar-log-container .log-entry:hover {
+    background: #F2F2F7;
+}
+
+.log-entry h4 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #86868B;
+    margin-bottom: 8px;
+}
+
+.log-entry p {
+    font-size: 14px;
+    color: #1D1D1F;
+    margin: 4px 0;
+}
+
+/* 用药记录 */
+.medication-log-container .log-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.medication-log-container .log-entry:last-child {
+    border-bottom: none;
+}
+
+.medication-log-container .log-entry h4 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1D1D1F;
+    margin: 0;
+}
+
+.medication-log-container .log-entry p {
+    font-size: 13px;
+    color: #86868B;
+    margin: 0;
+}
+
+/* 运动记录列表 */
+.exercise-list {
+    list-style: none;
+}
+
+.exercise-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: background 0.2s;
+}
+
+.exercise-list li:last-child {
+    border-bottom: none;
+}
+
+.exercise-list li:hover {
+    background: #F8F9FB;
+    margin: 0 -12px;
+    padding: 14px 12px;
+    border-radius: 10px;
+}
+
+/* 图表容器 */
+.chart-container {
+    width: 100%;
+    height: 300px;
+    min-height: 280px;
+    background: #F8F9FB;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 0;
+    margin: 0;
+    mix-blend-mode: multiply;
+}
+
+/* 消息提示 */
+.success-message,
+.error-message {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    z-index: 1001;
+    display: none;
+    animation: messageSlideIn 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.success-message {
+    background: #E6F4EA;
+    color: #1E8E3E;
+}
+
+.error-message {
+    background: #FEEAE6;
+    color: #C5221F;
+}
+
+/* 底部导航 */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    z-index: 999;
+}
+
+.bottom-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.bottom-nav li {
+    flex: 1;
+    text-align: center;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: #86868B;
+    font-size: 12px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+    color: #007AFF;
+}
+
+
+/* 6. 响应式设计 */
+@media (max-width: 992px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px 16px 90px;
+    }
+
+    .header {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .user-info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .info-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .info-card .value {
+        font-size: 22px;
+    }
+
+    .info-card h3 {
+        font-size: 12px;
+    }
+
+    .card {
+        padding: 24px;
+        border-radius: 16px;
+    }
+
+    .card h2 {
+        font-size: 16px;
+        letter-spacing: 0.02em;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .modal-content {
+        width: 92%;
+        padding: 24px;
+        border-radius: 16px;
+    }
+
+    .blood-sugar-log-container {
+        flex-direction: column;
+    }
+
+    .blood-sugar-log-container .log-entry {
+        min-width: 100%;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 16px 12px 100px;
+    }
+
+    .user-info {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .info-card .value {
+        font-size: 20px;
+    }
+
+    .info-card {
+        padding: 14px;
+    }
+
+    .info-card h3 {
+        font-size: 11px;
+    }
+
+    .add-btn1,
+    .add-btn3,
+    .add-medication-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+
+    .ai-greeting-card {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+
+    .greeting-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .greeting-text {
+        font-size: 14px;
+    }
+
+    .health-tip-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .tip-text {
+        font-size: 14px;
+    }
+
+    .tip-footer {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .tip-action-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .quick-entry-bar {
+        gap: 8px;
+    }
+
+    .quick-entry-item {
+        padding: 12px 6px;
+        border-radius: 14px;
+    }
+
+    .entry-icon {
+        font-size: 22px;
+    }
+
+    .entry-text {
+        font-size: 11px;
+    }
+
+    .goal-card,
+    .medication-reminder-card,
+    .ai-insight-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .goal-content {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .goal-ring-container {
+        width: 80px;
+        height: 80px;
+    }
+
+    .goal-percent {
+        font-size: 18px;
+    }
+
+    .reminder-item {
+        padding: 12px 14px;
+    }
+
+    .fab-container {
+        bottom: 90px;
+        right: 16px;
+    }
+
+    .fab-main {
+        width: 52px;
+        height: 52px;
+    }
+
+    .fab-item {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 12px 10px 100px;
+    }
+
+    .ai-greeting-card {
+        padding: 12px 14px;
+        border-radius: 14px;
+    }
+
+    .greeting-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .greeting-text {
+        font-size: 13px;
+    }
+
+    .greeting-sub {
+        font-size: 12px;
+    }
+
+    .health-tip-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .tip-badge {
+        font-size: 13px;
+    }
+
+    .tip-text {
+        font-size: 13px;
+    }
+
+    .quick-entry-bar {
+        gap: 6px;
+    }
+
+    .quick-entry-item {
+        padding: 10px 4px;
+        border-radius: 12px;
+    }
+
+    .entry-icon {
+        font-size: 20px;
+    }
+
+    .entry-text {
+        font-size: 10px;
+    }
+
+    .user-info {
+        gap: 8px;
+    }
+
+    .info-card {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .info-card .value {
+        font-size: 18px;
+    }
+
+    .info-card h3 {
+        font-size: 10px;
+        gap: 4px;
+    }
+
+    .goal-card,
+    .medication-reminder-card,
+    .ai-insight-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .goal-title,
+    .reminder-title {
+        font-size: 15px;
+    }
+
+    .goal-ring-container {
+        width: 70px;
+        height: 70px;
+    }
+
+    .goal-percent {
+        font-size: 16px;
+    }
+
+    .goal-stat .stat-num {
+        font-size: 18px;
+    }
+
+    .reminder-item {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .reminder-time-badge {
+        min-width: 50px;
+        padding: 5px 8px;
+    }
+
+    .reminder-time-badge .time {
+        font-size: 13px;
+    }
+
+    .reminder-name {
+        font-size: 14px;
+    }
+
+    .reminder-dosage {
+        font-size: 11px;
+    }
+
+    .card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .card h2 {
+        font-size: 15px;
+    }
+
+    .modal-content {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .fab-container {
+        bottom: 85px;
+        right: 12px;
+    }
+
+    .fab-main {
+        width: 48px;
+        height: 48px;
+    }
+
+    .fab-item {
+        width: 40px;
+        height: 40px;
+    }
+
+    .fab-item-icon {
+        font-size: 18px;
+    }
+}
+
+/* 7. 滚动条美化 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* 8. 选中文本样式 */
+::selection {
+    background: rgba(0, 122, 255, 0.2);
+    color: #1D1D1F;
+}
+
+/* 9. 平滑过渡 */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a, button, input, select {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ========================================
+   10. 深色模式样式
+   ======================================== */
+[data-theme="dark"] .ai-greeting-card {
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.15) 0%, rgba(88, 86, 214, 0.12) 100%);
+    border-color: rgba(0, 122, 255, 0.2);
+}
+
+[data-theme="dark"] .quick-entry-item {
+    background: var(--index-card);
+    box-shadow: var(--index-shadow);
+}
+
+[data-theme="dark"] .entry-text {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .health-tip-card {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .goal-card,
+[data-theme="dark"] .medication-reminder-card,
+[data-theme="dark"] .ai-insight-card {
+    background: var(--index-card);
+    border-color: var(--index-border);
+    box-shadow: var(--index-shadow);
+}
+
+[data-theme="dark"] .goal-title,
+[data-theme="dark"] .reminder-title,
+[data-theme="dark"] .goal-stat .stat-num {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .goal-ring-bg {
+    stroke: #2C2C2E;
+}
+
+[data-theme="dark"] .reminder-item {
+    background: var(--index-card-hover);
+}
+
+[data-theme="dark"] .reminder-time-badge {
+    background: var(--index-card);
+}
+
+[data-theme="dark"] .reminder-time-badge .time {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .reminder-name {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .header {
+    background: rgba(28, 28, 30, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .info-card {
+    background: rgba(44, 44, 46, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .info-card .value {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .info-card h3 {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .card {
+    background: var(--index-card);
+    border-color: var(--index-border);
+    box-shadow: var(--index-shadow);
+}
+
+[data-theme="dark"] .card h2,
+[data-theme="dark"] .card h2 span {
+    color: var(--index-text) !important;
+}
+
+[data-theme="dark"] .blood-sugar-log-container .log-entry {
+    background: var(--index-card-hover);
+    border-color: var(--index-border);
+}
+
+[data-theme="dark"] .log-entry p,
+[data-theme="dark"] .medication-log-container .log-entry h4 {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .log-entry h4,
+[data-theme="dark"] .medication-log-container .log-entry p {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .exercise-list li {
+    border-bottom-color: var(--index-border);
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .exercise-list li:hover {
+    background: var(--index-card-hover);
+}
+
+[data-theme="dark"] .chart-container {
+    background: var(--index-card-hover);
+    border-color: var(--index-border);
+    mix-blend-mode: normal;
+}
+
+[data-theme="dark"] .modal-content {
+    background: var(--index-card);
+}
+
+[data-theme="dark"] .modal-content h3 {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .form-group label {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select {
+    background: var(--index-card-hover);
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group select:focus {
+    background: #3A3A3C;
+}
+
+[data-theme="dark"] .close-btn {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .close-btn:hover {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .fab-item {
+    background: var(--index-card);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .insight-content {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .insight-time {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .greeting-text {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .greeting-sub {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .status-normal {
+    background: rgba(52, 199, 89, 0.15);
+}
+
+[data-theme="dark"] .status-warning {
+    background: rgba(255, 149, 0, 0.15);
+}
+
+[data-theme="dark"] .status-danger {
+    background: rgba(255, 59, 48, 0.15);
+}
+
+[data-theme="dark"] .status-tip {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .day-btn {
+    background: var(--index-card-hover);
+    border-color: var(--index-border);
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .success-message {
+    background: rgba(52, 199, 89, 0.15);
+    color: #34C759;
+}
+
+[data-theme="dark"] .error-message {
+    background: rgba(255, 59, 48, 0.15);
+    color: #FF453A;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] ::selection {
+    color: var(--index-text);
+}
+
+
+/* ========================================
+   每日打卡提醒弹窗 - Apple Health 风格
+   ======================================== */
+.checkin-reminder-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.checkin-reminder-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.checkin-reminder-content {
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 32px 28px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    position: relative;
+    animation: reminderSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes reminderSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.checkin-reminder-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: #F2F2F7;
+    border-radius: 50%;
+    font-size: 18px;
+    color: #86868B;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.checkin-reminder-close:hover {
+    background: #E5E5EA;
+    color: #1D1D1F;
+}
+
+.checkin-reminder-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+    animation: fireGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes fireGlow {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.1); filter: brightness(1.2); }
+}
+
+.checkin-reminder-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1D1D1F;
+    margin: 0 0 8px 0;
+}
+
+.checkin-reminder-desc {
+    font-size: 15px;
+    color: #86868B;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+}
+
+.checkin-reminder-reward {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    padding: 12px 20px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+}
+
+.checkin-reminder-reward .reward-icon {
+    font-size: 20px;
+}
+
+.checkin-reminder-reward .reward-text {
+    font-size: 15px;
+    color: #667eea;
+    font-weight: 500;
+}
+
+.checkin-reminder-reward .reward-text em {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    color: #764ba2;
+}
+
+.checkin-reminder-streak {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 24px;
+}
+
+.checkin-reminder-streak .streak-icon {
+    font-size: 16px;
+}
+
+.checkin-reminder-streak .streak-text {
+    font-size: 14px;
+    color: #86868B;
+}
+
+.checkin-reminder-streak .streak-text em {
+    font-style: normal;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.checkin-reminder-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 16px;
+    color: #FFFFFF;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+}
+
+.checkin-reminder-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.45);
+}
+
+.checkin-reminder-btn:active {
+    transform: scale(0.98);
+}
+
+.checkin-reminder-btn .btn-icon {
+    font-size: 20px;
+}
+
+.checkin-reminder-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.checkin-reminder-later {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    color: #86868B;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: color 0.2s;
+}
+
+.checkin-reminder-later:hover {
+    color: #1D1D1F;
+}
+
+/* 打卡成功弹窗 */
+.checkin-success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2001;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.checkin-success-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.checkin-success-content {
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 40px 32px;
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+    animation: successPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes successPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.checkin-success-content .success-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    animation: celebrateBounce 0.6s ease 0.3s;
+}
+
+@keyframes celebrateBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.checkin-success-content h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1D1D1F;
+    margin: 0 0 8px 0;
+}
+
+.checkin-success-content p {
+    font-size: 15px;
+    color: #86868B;
+    margin: 0 0 16px 0;
+}
+
+.checkin-success-content p span {
+    font-weight: 700;
+    color: #667eea;
+}
+
+.success-reward {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.success-bonus {
+    font-size: 14px;
+    color: #FF9500;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background: rgba(255, 149, 0, 0.1);
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.success-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 16px;
+    color: #FFFFFF;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+}
+
+.success-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.45);
+}
+
+.success-btn:active {
+    transform: scale(0.98);
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .checkin-reminder-content,
+[data-theme="dark"] .checkin-success-content {
+    background: var(--index-card);
+}
+
+[data-theme="dark"] .checkin-reminder-close {
+    background: var(--index-card-hover);
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .checkin-reminder-close:hover {
+    background: #3A3A3C;
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .checkin-reminder-title,
+[data-theme="dark"] .checkin-success-content h3 {
+    color: var(--index-text);
+}
+
+[data-theme="dark"] .checkin-reminder-desc,
+[data-theme="dark"] .checkin-success-content p {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .checkin-reminder-reward {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+}
+
+[data-theme="dark"] .checkin-reminder-later {
+    color: var(--index-text-secondary);
+}
+
+[data-theme="dark"] .checkin-reminder-later:hover {
+    color: var(--index-text);
+}
+
+/* 响应式适配 */
+@media (max-width: 480px) {
+    .checkin-reminder-content {
+        padding: 28px 24px;
+        border-radius: 20px;
+    }
+    
+    .checkin-reminder-icon {
+        font-size: 48px;
+    }
+    
+    .checkin-reminder-title {
+        font-size: 20px;
+    }
+    
+    .checkin-reminder-desc {
+        font-size: 14px;
+    }
+    
+    .checkin-reminder-btn {
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+    
+    .checkin-success-content {
+        padding: 32px 24px;
+    }
+    
+    .checkin-success-content .success-icon {
+        font-size: 56px;
+    }
+    
+    .checkin-success-content h3 {
+        font-size: 22px;
+    }
+    
+    .success-reward {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 360px) {
+    .checkin-reminder-content,
+    .checkin-success-content {
+        padding: 24px 20px;
+        border-radius: 18px;
+    }
+    
+    .checkin-reminder-icon {
+        font-size: 44px;
+    }
+    
+    .checkin-reminder-title {
+        font-size: 18px;
+    }
+    
+    .checkin-success-content .success-icon {
+        font-size: 48px;
+    }
+    
+    .checkin-success-content h3 {
+        font-size: 20px;
+    }
+    
+    .success-reward {
+        font-size: 28px;
+    }
+}

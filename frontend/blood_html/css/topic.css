@@ -1,0 +1,344 @@
+/* ========================================
+   话题详情页样式 - Apple Health 风格
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --primary: #007AFF;
+    --secondary: #F5F5F7;
+    --background: #F8F9FB;
+    --text: #1D1D1F;
+    --text-light: #86868B;
+    --border: rgba(0, 0, 0, 0.05);
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --card-bg: #FFFFFF;
+}
+
+[data-theme="dark"] {
+    --secondary: #2C2C2E;
+    --background: #000000;
+    --text: #FFFFFF;
+    --text-light: #98989D;
+    --border: rgba(255, 255, 255, 0.1);
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --card-bg: #1C1C1E;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* 主容器 */
+.topic-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 100px;
+}
+
+/* 加载状态 */
+.loading {
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+/* 错误提示 */
+.error {
+    padding: 1.5rem;
+    background: #FEEAE6;
+    border-radius: 16px;
+    color: #C5221F;
+    margin: 1rem 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+[data-theme="dark"] .error {
+    background: rgba(255, 59, 48, 0.15);
+    color: #FF6B6B;
+}
+
+/* 话题头部 */
+.topic-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--secondary);
+}
+
+.author-info {
+    flex: 1;
+}
+
+.author-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text);
+}
+
+.create-date {
+    color: var(--text-light);
+    font-size: 13px;
+    margin-top: 4px;
+    font-feature-settings: 'tnum';
+}
+
+/* 统计信息 */
+.topic-stats {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.topic-stats span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.topic-stats svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* 点赞按钮 */
+.like-button,
+.comment-like-button {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    border-radius: 20px;
+    color: var(--text-light);
+}
+
+.like-button:hover,
+.comment-like-button:hover {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+.like-button svg,
+.comment-like-button svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* 话题内容 */
+.topic-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.35;
+    color: var(--text);
+    letter-spacing: -0.3px;
+}
+
+.topic-content-body {
+    font-size: 16px;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    color: var(--text);
+}
+
+.topic-content-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+    margin: 1.25rem 0;
+    box-shadow: var(--shadow);
+}
+
+/* 评论区域 */
+.comments-section {
+    margin-top: 2rem;
+}
+
+.comments-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary);
+    color: var(--text);
+}
+
+.comment-item {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-author {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.comment-time {
+    color: var(--text-light);
+    font-size: 12px;
+    font-feature-settings: 'tnum';
+}
+
+.comment-content {
+    font-size: 14px;
+    padding-left: 50px;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* 评论输入 */
+.comment-input-container {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 1.5rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+    display: flex;
+    gap: 12px;
+}
+
+[data-theme="dark"] .comment-input-container {
+    background: rgba(28, 28, 30, 0.95);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.comment-input {
+    flex: 1;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 24px;
+    background: var(--secondary);
+    font-size: 15px;
+    resize: none;
+    min-height: 48px;
+    transition: all 0.2s ease;
+    color: var(--text);
+}
+
+.comment-input:focus {
+    outline: none;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+[data-theme="dark"] .comment-input:focus {
+    background: #2C2C2E;
+}
+
+.comment-input::placeholder {
+    color: var(--text-light);
+}
+
+.submit-comment {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submit-comment:hover {
+    background: #0056CC;
+    transform: translateY(-1px);
+}
+
+.submit-comment:active {
+    transform: scale(0.97);
+}
+
+/* 间距调整 */
+.post-views,
+.post-comments,
+.like-button {
+    margin: 0 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .topic-container {
+        padding: 1rem 1rem 100px;
+    }
+
+    .topic-title {
+        font-size: 20px;
+    }
+
+    .topic-content-body {
+        font-size: 15px;
+    }
+
+    .comment-input-container {
+        padding: 12px;
+    }
+
+    .submit-comment {
+        padding: 12px 18px;
+    }
+
+    .author-avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .comment-content {
+        padding-left: 0;
+        margin-top: 10px;
+    }
+}
+
+.footer-placeholder {
+    height: 80px;
+}

@@ -1,0 +1,6 @@
+yarn add vue-router@next
+yarn add element-plus
+yarn add unplugin-vue-components
+yarn add axios@next
+yarn add vuex
+yarn add vuex-persistedstate

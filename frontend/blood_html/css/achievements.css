@@ -1,0 +1,279 @@
+/* ========================================
+   成就徽章页面 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --ach-bg: #F8F9FB;
+    --ach-card: #FFFFFF;
+    --ach-text: #1D1D1F;
+    --ach-text-secondary: #86868B;
+    --ach-accent: #007AFF;
+    --ach-gold: #FFD700;
+    --ach-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+    --ach-radius: 20px;
+    --ach-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --ach-input-bg: #F8F9FB;
+    --ach-border: #E5E5EA;
+}
+
+[data-theme="dark"] {
+    --ach-bg: #000000;
+    --ach-card: #1C1C1E;
+    --ach-text: #FFFFFF;
+    --ach-text-secondary: #98989D;
+    --ach-shadow: 0 2px 12px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --ach-input-bg: #2C2C2E;
+    --ach-border: #3A3A3C;
+}
+
+body {
+    background: var(--ach-bg);
+    min-height: 100vh;
+    transition: background 0.3s;
+}
+
+.achievements-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 16px 120px;
+}
+
+/* 头部 */
+.achievements-header {
+    text-align: center;
+    padding: 24px 0 20px;
+}
+
+.achievements-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ach-text);
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+}
+
+.achievements-header p {
+    font-size: 15px;
+    color: var(--ach-text-secondary);
+    margin: 0;
+}
+
+/* 统计卡片 */
+.stats-card {
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    border-radius: var(--ach-radius);
+    padding: 28px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 24px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 122, 255, 0.25);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.stat-label {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 徽章区域 */
+.badges-section,
+.progress-section {
+    background: var(--ach-card);
+    border-radius: var(--ach-radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--ach-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.badges-section h2,
+.progress-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ach-text);
+    margin: 0 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 徽章网格 */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.badge-card {
+    background: var(--ach-input-bg);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: var(--ach-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.badge-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.badge-card.unlocked {
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF5CC 100%);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.badge-card.locked {
+    opacity: 0.6;
+}
+
+.badge-card.locked .badge-emoji {
+    filter: grayscale(1);
+}
+
+.badge-emoji {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.badge-card.unlocked .badge-emoji {
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.badge-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ach-text);
+    margin: 0 0 6px;
+}
+
+.badge-desc {
+    font-size: 12px;
+    color: var(--ach-text-secondary);
+    margin: 0 0 12px;
+    line-height: 1.4;
+}
+
+.badge-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.badge-card.unlocked .badge-status {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10B981;
+}
+
+.badge-card.locked .badge-status {
+    background: rgba(134, 134, 139, 0.15);
+    color: var(--ach-text-secondary);
+}
+
+/* 进度列表 */
+.progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.progress-icon {
+    font-size: 32px;
+    width: 56px;
+    height: 56px;
+    background: var(--ach-input-bg);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.progress-info {
+    flex: 1;
+}
+
+.progress-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ach-text);
+    margin: 0 0 6px;
+}
+
+.progress-bar-wrapper {
+    height: 8px;
+    background: var(--ach-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 12px;
+    color: var(--ach-text-secondary);
+    margin-top: 4px;
+}
+
+/* 响应式 */
+@media (max-width: 480px) {
+    .achievements-header h1 {
+        font-size: 24px;
+    }
+
+    .stats-card {
+        padding: 24px 16px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .badges-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .badge-emoji {
+        font-size: 40px;
+    }
+}

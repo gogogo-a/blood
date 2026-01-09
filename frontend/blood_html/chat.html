@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能健康助手</title>
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/public.css">
+    <script src="js/theme.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- 顶部导航栏 -->
+        <div class="chat-header">
+            <button class="back-btn" onclick="history.back()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+            </button>
+            <div class="header-info">
+                <div class="header-avatar">
+                    <img src="image/ai.jpg" alt="AI">
+                    <span class="online-dot"></span>
+                </div>
+                <div class="header-text">
+                    <h1>智能健康助手</h1>
+                    <span class="status-text">在线 · AI 驱动</span>
+                </div>
+            </div>
+            <button class="menu-btn" onclick="toggleMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 欢迎卡片 -->
+        <div class="welcome-card" id="welcome-card">
+            <div class="welcome-icon">🤖</div>
+            <h2>你好，我是你的健康助手</h2>
+            <p>我可以帮你分析饮食、解答血糖问题、提供健康建议</p>
+            
+            <!-- 快捷操作 -->
+            <div class="quick-actions">
+                <button class="quick-btn" onclick="sendQuickMessage('今天吃什么对血糖好？')">
+                    <span class="quick-icon">🍽️</span>
+                    <span>饮食建议</span>
+                </button>
+                <button class="quick-btn" onclick="sendQuickMessage('我的血糖偏高怎么办？')">
+                    <span class="quick-icon">📊</span>
+                    <span>血糖咨询</span>
+                </button>
+                <button class="quick-btn" onclick="sendQuickMessage('推荐一些适合糖尿病人的运动')">
+                    <span class="quick-icon">🏃</span>
+                    <span>运动推荐</span>
+                </button>
+                <button class="quick-btn" onclick="document.getElementById('upload-trigger').click()">
+                    <span class="quick-icon">📷</span>
+                    <span>拍照识别</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- 聊天消息区域 -->
+        <div class="chat-messages" id="chat-messages">
+            <!-- 消息动态生成 -->
+        </div>
+
+        <!-- 输入框区域 -->
+        <div class="chat-input-wrapper">
+            <!-- 快捷问题推荐 -->
+            <div class="quick-suggest-bar" id="quick-suggest-bar">
+                <div class="quick-suggest-scroll" id="quick-suggest-scroll">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+            <div class="chat-input">
+                <button class="icon-btn upload-btn" id="upload-trigger" title="上传图片">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"/>
+                    </svg>
+                </button>
+                <textarea id="chat-input" placeholder="输入你的问题..." rows="1"></textarea>
+                <button class="send-btn" id="send-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片上传模态框 -->
+    <div class="modal-overlay" id="upload-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>📷 食物热量分析</h4>
+                <button class="close-btn" onclick="closeUploadModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-area" id="drop-zone">
+                    <input type="file" id="image-input" accept="image/*" hidden>
+                    <div class="upload-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="#007AFF">
+                            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                        </svg>
+                    </div>
+                    <p class="upload-text">点击或拖拽图片到这里</p>
+                    <p class="upload-hint">支持 JPG、PNG 格式</p>
+                    <label for="image-input" class="upload-btn-label">选择图片</label>
+                </div>
+                <div class="preview-area" id="image-preview"></div>
+                <div class="analysis-result" id="analysis-result"></div>
+                <button class="analyze-btn" id="analyze-btn" disabled>
+                    <span class="btn-text">开始分析</span>
+                    <span class="btn-loading" style="display:none;">
+                        <span class="spinner"></span>
+                        分析中...
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 菜单弹窗 -->
+    <div class="menu-overlay" id="menu-overlay" onclick="toggleMenu()">
+        <div class="menu-panel" onclick="event.stopPropagation()">
+            <div class="menu-item" onclick="clearChat()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                <span>清空对话</span>
+            </div>
+            <div class="menu-item" onclick="exportChat()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                <span>导出记录</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/marked.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>

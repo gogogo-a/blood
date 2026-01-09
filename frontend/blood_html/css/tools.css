@@ -1,0 +1,406 @@
+/* ========================================
+   实用工具页面 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --tools-bg: #F8F9FB;
+    --tools-card-bg: #FFFFFF;
+    --tools-text-primary: #1D1D1F;
+    --tools-text-secondary: #86868B;
+    --tools-accent: #007AFF;
+    --tools-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 
+                    0 8px 24px rgba(0, 0, 0, 0.06);
+    --tools-radius: 20px;
+    --tools-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --tools-icon-bg: #F5F5F7;
+    --tools-tips-bg: #F8F9FB;
+}
+
+[data-theme="dark"] {
+    --tools-bg: #000000;
+    --tools-card-bg: #1C1C1E;
+    --tools-text-primary: #FFFFFF;
+    --tools-text-secondary: #98989D;
+    --tools-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 
+                    0 8px 24px rgba(0, 0, 0, 0.3);
+    --tools-icon-bg: #2C2C2E;
+    --tools-tips-bg: #2C2C2E;
+}
+
+body {
+    background: var(--tools-bg);
+    transition: background 0.3s;
+}
+
+.tools-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 16px 120px;
+}
+
+/* 头部 */
+.tools-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 20px 0;
+}
+
+.tools-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--tools-text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.tools-header p {
+    font-size: 15px;
+    color: var(--tools-text-secondary);
+}
+
+/* 工具卡片网格 */
+.tools-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.tool-card {
+    display: flex;
+    align-items: center;
+    background: var(--tools-card-bg);
+    border-radius: var(--tools-radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: var(--tools-transition);
+    box-shadow: var(--tools-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.tool-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 
+                0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.tool-card:active {
+    transform: scale(0.98);
+}
+
+.tool-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--tools-icon-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+    transition: var(--tools-transition);
+}
+
+.tool-card:hover .tool-icon {
+    transform: scale(1.05);
+}
+
+.tool-info {
+    flex: 1;
+}
+
+.tool-info h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--tools-text-primary);
+    margin-bottom: 4px;
+}
+
+.tool-info p {
+    font-size: 13px;
+    color: var(--tools-text-secondary);
+}
+
+.tool-arrow {
+    opacity: 0.4;
+    transition: var(--tools-transition);
+    flex-shrink: 0;
+}
+
+.tool-card:hover .tool-arrow {
+    opacity: 0.7;
+    transform: translateX(3px);
+}
+
+/* 小贴士区域 */
+.tips-section {
+    background: var(--tools-card-bg);
+    border-radius: var(--tools-radius);
+    padding: 24px;
+    box-shadow: var(--tools-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.tips-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--tools-text-primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* AI 精选徽章 */
+.tips-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-left: auto;
+    animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* 轮播容器 */
+.tips-carousel {
+    height: 168px; /* 显示3条 */
+    overflow: hidden;
+    position: relative;
+    border-radius: 12px;
+    background: var(--tools-tips-bg);
+}
+
+.tips-carousel::before,
+.tips-carousel::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 24px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.tips-carousel::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--tools-tips-bg) 0%, transparent 100%);
+}
+
+.tips-carousel::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--tools-tips-bg) 0%, transparent 100%);
+}
+
+/* 滚动轨道 */
+.tips-track {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 0;
+}
+
+/* 单条贴士 */
+.tip-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    height: 56px;
+    box-sizing: border-box;
+}
+
+.tip-icon {
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--tools-card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    flex-shrink: 0;
+}
+
+.tip-item p {
+    font-size: 14px;
+    color: var(--tools-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 旧版样式兼容 */
+.tips-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tip-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--tools-accent);
+    background: rgba(0, 122, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+/* 响应式 */
+@media (min-width: 600px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .tools-container {
+        padding: 16px 12px 100px;
+    }
+
+    .tools-header {
+        margin-bottom: 24px;
+        padding: 16px 0;
+    }
+
+    .tools-header h1 {
+        font-size: 24px;
+    }
+
+    .tools-header p {
+        font-size: 14px;
+    }
+
+    .tool-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .tool-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        margin-right: 14px;
+    }
+
+    .tool-info h3 {
+        font-size: 15px;
+    }
+
+    .tool-info p {
+        font-size: 12px;
+    }
+
+    .tips-section {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .tips-section h2 {
+        font-size: 16px;
+    }
+
+    .tips-carousel {
+        height: 150px;
+    }
+
+    .tip-item {
+        padding: 10px 14px;
+        height: 50px;
+    }
+
+    .tip-icon {
+        font-size: 18px;
+        width: 28px;
+        height: 28px;
+    }
+
+    .tip-item p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 360px) {
+    .tools-container {
+        padding: 12px 10px 100px;
+    }
+
+    .tools-header {
+        margin-bottom: 20px;
+        padding: 12px 0;
+    }
+
+    .tools-header h1 {
+        font-size: 22px;
+    }
+
+    .tools-header p {
+        font-size: 13px;
+    }
+
+    .tools-grid {
+        gap: 10px;
+    }
+
+    .tool-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .tool-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        margin-right: 12px;
+    }
+
+    .tool-info h3 {
+        font-size: 14px;
+    }
+
+    .tool-info p {
+        font-size: 11px;
+    }
+
+    .tips-section {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .tips-section h2 {
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    .tips-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+
+    .tips-carousel {
+        height: 140px;
+        border-radius: 10px;
+    }
+
+    .tip-item {
+        padding: 8px 12px;
+        height: 46px;
+        gap: 10px;
+    }
+
+    .tip-icon {
+        font-size: 16px;
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+    }
+
+    .tip-item p {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,438 @@
+/* ========================================
+   订单页面样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --order-bg: #F8F9FB;
+    --order-card: #FFFFFF;
+    --order-text: #1D1D1F;
+    --order-text-secondary: #86868B;
+    --order-input-bg: #F5F5F7;
+    --order-border: rgba(0, 0, 0, 0.05);
+    --order-primary: #007AFF;
+    --order-success: #34C759;
+    --order-warning: #FF9500;
+    --order-danger: #FF3B30;
+}
+
+[data-theme="dark"] {
+    --order-bg: #000000;
+    --order-card: #1C1C1E;
+    --order-text: #FFFFFF;
+    --order-text-secondary: #98989D;
+    --order-input-bg: #2C2C2E;
+    --order-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--order-bg);
+    color: var(--order-text);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+    padding-bottom: 100px;
+}
+
+/* 订单统计卡片 */
+.stats-card {
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.stats-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    opacity: 0.95;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    font-feature-settings: 'tnum';
+    margin-bottom: 4px;
+}
+
+.stat-value.pending {
+    color: #FFD60A;
+}
+
+.stat-value.completed {
+    color: #30D158;
+}
+
+.stat-label {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+/* 筛选标签 */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filter-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-item {
+    padding: 10px 18px;
+    background: var(--order-card);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--order-text-secondary);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    border: 1px solid var(--order-border);
+}
+
+.tab-item:hover {
+    color: var(--order-primary);
+    border-color: rgba(0, 122, 255, 0.3);
+}
+
+.tab-item.active {
+    background: var(--order-primary);
+    color: white;
+    border-color: var(--order-primary);
+}
+
+/* 订单列表区域 */
+.orders-section {
+    background-color: var(--order-card);
+    border-radius: 20px;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .orders-section {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.orders-list {
+    padding: 8px 0;
+}
+
+/* 订单项样式 */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    margin: 0 12px;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.order-item:hover {
+    background: var(--order-input-bg);
+}
+
+.order-item:not(:last-child) {
+    border-bottom: 1px solid var(--order-border);
+    border-radius: 0;
+    margin: 0;
+    padding: 16px 20px;
+}
+
+.order-item:not(:last-child):hover {
+    border-radius: 0;
+    margin: 0;
+}
+
+.order-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.order-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.order-id {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--order-text);
+}
+
+.order-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.order-status.pending {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--order-warning);
+}
+
+.order-status.completed {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--order-success);
+}
+
+.order-status.cancelled {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--order-danger);
+}
+
+.order-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--order-text-secondary);
+}
+
+.order-amount {
+    font-weight: 600;
+    color: var(--order-primary);
+    font-feature-settings: 'tnum';
+}
+
+.order-time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.order-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* 按钮样式 */
+.action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pay-button {
+    background: var(--order-primary);
+    color: white;
+}
+
+.pay-button:hover {
+    background: #0056CC;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.pay-button:active {
+    transform: scale(0.97);
+}
+
+.cancel-button {
+    background: var(--order-input-bg);
+    color: var(--order-text-secondary);
+}
+
+.cancel-button:hover {
+    background: var(--order-border);
+    color: var(--order-text);
+}
+
+.cancel-button:active {
+    transform: scale(0.97);
+}
+
+/* 空状态 */
+.empty-state {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    margin-bottom: 16px;
+    color: var(--order-text-secondary);
+    opacity: 0.5;
+}
+
+.empty-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--order-text);
+    margin-bottom: 8px;
+}
+
+.empty-hint {
+    font-size: 14px;
+    color: var(--order-text-secondary);
+    margin-bottom: 20px;
+}
+
+.empty-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 24px;
+    background: var(--order-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.empty-action:hover {
+    background: #0056CC;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 122, 255, 0.3);
+}
+
+/* 加载更多 */
+.loading-more {
+    padding: 16px 20px;
+    text-align: center;
+}
+
+.load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--order-input-bg);
+    color: var(--order-text);
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.load-more-btn:hover {
+    background: var(--order-primary);
+    color: white;
+}
+
+.load-more-btn:active {
+    transform: scale(0.97);
+}
+
+.load-more-btn svg {
+    transition: transform 0.3s;
+}
+
+.load-more-btn:hover svg {
+    transform: rotate(180deg);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .stats-card {
+        padding: 16px 20px;
+        border-radius: 16px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .orders-section {
+        border-radius: 16px;
+    }
+
+    .order-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+    }
+
+    .order-item:not(:last-child) {
+        padding: 14px 16px;
+    }
+
+    .order-actions {
+        width: 100%;
+    }
+
+    .action-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .filter-tabs {
+        margin-left: -16px;
+        margin-right: -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        gap: 8px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+    }
+
+    .tab-item {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+}

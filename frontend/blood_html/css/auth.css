@@ -1,0 +1,460 @@
+/* ========================================
+   登录/注册页面 - Apple 极简主义设计系统
+   ======================================== */
+
+/* CSS 变量定义 */
+:root {
+    --auth-bg-start: #F8F9FB;
+    --auth-bg-end: #E9ECEF;
+    --auth-card-bg: rgba(255, 255, 255, 0.8);
+    
+    --auth-primary: #007AFF;
+    --auth-primary-dark: #0056CC;
+    --auth-success: #10B981;
+    --auth-error: #FF3B30;
+    
+    --auth-text-primary: #1D1D1F;
+    --auth-text-secondary: #86868B;
+    --auth-text-tertiary: #AEAEB2;
+    
+    --auth-input-bg: #F2F2F7;
+    --auth-input-focus-bg: #FFFFFF;
+    
+    --auth-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 
+                   0 20px 60px rgba(0, 0, 0, 0.05);
+    --auth-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.06), 
+                         0 25px 70px rgba(0, 0, 0, 0.07);
+    
+    --auth-radius-lg: 24px;
+    --auth-radius-md: 12px;
+    --auth-radius-sm: 10px;
+    
+    --auth-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --auth-transition-spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="dark"] {
+    --auth-bg-start: #000000;
+    --auth-bg-end: #1C1C1E;
+    --auth-card-bg: rgba(28, 28, 30, 0.9);
+    
+    --auth-text-primary: #FFFFFF;
+    --auth-text-secondary: #98989D;
+    --auth-text-tertiary: #636366;
+    
+    --auth-input-bg: #2C2C2E;
+    --auth-input-focus-bg: #3A3A3C;
+    
+    --auth-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 
+                   0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 页面背景 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: radial-gradient(ellipse at top, var(--auth-bg-start) 0%, var(--auth-bg-end) 100%);
+    color: var(--auth-text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background 0.3s, color 0.3s;
+}
+
+
+/* ========================================
+   容器样式 - 毛玻璃效果
+   ======================================== */
+.login-container,
+.register-container {
+    background: var(--auth-card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 48px 40px;
+    border-radius: var(--auth-radius-lg);
+    box-shadow: var(--auth-shadow);
+    width: 100%;
+    max-width: 420px;
+    margin: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    
+    /* 入场动画 */
+    animation: containerFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   头部样式
+   ======================================== */
+.login-header,
+.register-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.login-header h1,
+.register-header h1 {
+    color: var(--auth-text-primary);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.login-header p,
+.register-header p {
+    color: var(--auth-text-secondary);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* ========================================
+   Tab 切换
+   ======================================== */
+.login-tabs {
+    display: flex;
+    margin-bottom: 28px;
+    background: var(--auth-input-bg);
+    border-radius: var(--auth-radius-sm);
+    padding: 4px;
+    position: relative;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px 16px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--auth-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--auth-transition);
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.tab.active {
+    color: var(--auth-text-primary);
+    background: var(--auth-input-focus-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .tab.active {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tab:hover:not(.active) {
+    color: var(--auth-text-primary);
+}
+
+/* ========================================
+   表单样式
+   ======================================== */
+.form-content {
+    display: none;
+}
+
+.form-content.active {
+    display: block;
+    animation: formFadeIn 0.3s ease;
+}
+
+@keyframes formFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--auth-text-primary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: var(--auth-radius-sm);
+    background: var(--auth-input-bg);
+    font-size: 15px;
+    color: var(--auth-text-primary);
+    transition: var(--auth-transition);
+}
+
+.form-group input:focus {
+    outline: none;
+    background: var(--auth-input-focus-bg);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+.form-group input::placeholder {
+    color: var(--auth-text-tertiary);
+}
+
+/* 验证码组 */
+.verify-code-group {
+    display: flex;
+    gap: 12px;
+}
+
+.verify-code-group input {
+    flex: 1;
+}
+
+.verify-code-btn {
+    padding: 14px 20px;
+    background: var(--auth-input-bg);
+    color: var(--auth-primary);
+    border: none;
+    border-radius: var(--auth-radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--auth-transition);
+}
+
+.verify-code-btn:hover {
+    background: #E8E8ED;
+}
+
+.verify-code-btn:active {
+    transform: scale(0.98);
+}
+
+.verify-code-btn:disabled {
+    background: var(--auth-input-bg);
+    color: var(--auth-text-tertiary);
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 密码要求提示 */
+.password-requirements {
+    font-size: 12px;
+    color: var(--auth-text-secondary);
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   按钮样式
+   ======================================== */
+.login-btn,
+.register-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--auth-primary);
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--auth-radius-md);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    transition: var(--auth-transition);
+}
+
+.login-btn:hover,
+.register-btn:hover {
+    background: var(--auth-primary-dark);
+    transform: scale(1.02);
+}
+
+.login-btn:active,
+.register-btn:active {
+    transform: scale(0.98);
+}
+
+/* ========================================
+   链接样式
+   ======================================== */
+.register-link,
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    color: var(--auth-text-secondary);
+}
+
+.register-link a,
+.login-link a {
+    color: var(--auth-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--auth-transition);
+}
+
+.register-link a:hover,
+.login-link a:hover {
+    color: var(--auth-primary-dark);
+}
+
+.register-link .divider {
+    margin: 0 12px;
+    color: var(--auth-text-tertiary);
+}
+
+.admin-link {
+    color: var(--auth-text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: var(--auth-transition);
+}
+
+.admin-link:hover {
+    color: var(--auth-primary);
+}
+
+/* ========================================
+   提示消息
+   ======================================== */
+.success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background: var(--auth-success);
+    color: white;
+    padding: 16px 28px;
+    border-radius: var(--auth-radius-md);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: var(--auth-transition);
+    font-weight: 500;
+}
+
+.success-message.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+}
+
+.success-message::before {
+    content: '✓';
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background: var(--auth-error);
+    color: white;
+    padding: 16px 28px;
+    border-radius: var(--auth-radius-md);
+    box-shadow: 0 8px 24px rgba(255, 59, 48, 0.25);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: var(--auth-transition);
+    font-weight: 500;
+}
+
+.error-message.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+}
+
+.error-message::before {
+    content: '!';
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 表单内的错误提示 */
+.form-group .error-message {
+    position: static;
+    transform: none;
+    background: transparent;
+    color: var(--auth-error);
+    padding: 0;
+    margin-top: 6px;
+    box-shadow: none;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 1;
+    display: none;
+}
+
+.form-group .error-message::before {
+    display: none;
+}
+
+/* ========================================
+   响应式设计
+   ======================================== */
+@media (max-width: 480px) {
+    .login-container,
+    .register-container {
+        padding: 36px 24px;
+        margin: 16px;
+        border-radius: 20px;
+    }
+
+    .login-header h1,
+    .register-header h1 {
+        font-size: 24px;
+    }
+
+    .tab {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .form-group input {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    .verify-code-btn {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .login-btn,
+    .register-btn {
+        padding: 14px;
+        font-size: 15px;
+    }
+}

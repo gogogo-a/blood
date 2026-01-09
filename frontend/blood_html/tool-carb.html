@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>碳水计算器 - 血糖管理系统</title>
+    <link rel="stylesheet" href="css/tool-detail.css">
+    <link rel="stylesheet" href="css/tool-calculator.css">
+    <link rel="stylesheet" href="css/public.css">
+    <script src="js/theme.js"></script>
+    <script defer src="js/navbar.js"></script>
+</head>
+<body>
+    <div class="tool-detail-container">
+        <header class="tool-detail-header">
+            <a href="tools.html" class="back-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#007AFF">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </a>
+            <h1>碳水计算器</h1>
+        </header>
+
+        <!-- 计算器表单 -->
+        <div class="calc-card">
+            <div class="calc-form">
+                <div class="form-group">
+                    <label>选择食物</label>
+                    <select id="food-select">
+                        <option value="">请选择食物</option>
+                        <!-- 由JS动态加载 -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>或手动输入碳水含量 (g/100g)</label>
+                    <input type="number" id="carb-per-100" placeholder="每100g碳水含量">
+                </div>
+
+                <div class="form-group">
+                    <label>食物重量 (克)</label>
+                    <input type="number" id="food-weight" placeholder="输入食物重量" value="100">
+                </div>
+
+                <button class="calc-btn" onclick="calculateCarb()">计算碳水</button>
+            </div>
+        </div>
+
+        <!-- 计算结果 -->
+        <div class="result-card" id="result-card" style="display: none;">
+            <h3>计算结果</h3>
+            <div class="result-main">
+                <span class="result-value" id="result-value">0</span>
+                <span class="result-unit">克碳水</span>
+            </div>
+            <div class="result-tips">
+                <p id="result-tips"></p>
+            </div>
+        </div>
+
+        <!-- 参考信息 -->
+        <div class="info-card">
+            <h3>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#86868B">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                碳水摄入建议
+            </h3>
+            <ul class="info-list">
+                <li>糖尿病患者每餐碳水建议：<strong>45-60克</strong></li>
+                <li>每日总碳水建议：<strong>130-200克</strong></li>
+                <li>优先选择低GI、高纤维的碳水来源</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script>
+        let foodList = [];
+        
+        // 页面加载时获取食物数据
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFoodData();
+        });
+        
+        // 从后端加载食物数据
+        async function loadFoodData() {
+            const foodSelect = document.getElementById('food-select');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/tools/food-gi/`);
+                const data = await response.json();
+                
+                if (data.status && data.data.length > 0) {
+                    foodList = data.data;
+                    renderFoodOptions(foodList);
+                } else {
+                    // 后端无数据时使用备用数据
+                    useLocalFoodData();
+                }
+            } catch (error) {
+                console.error('获取食物数据失败:', error);
+                useLocalFoodData();
+            }
+        }
+        
+        // 渲染食物选项
+        function renderFoodOptions(foods) {
+            const foodSelect = document.getElementById('food-select');
+            
+            // 按分类分组
+            const categoryMap = {
+                'grain': '谷物类',
+                'fruit': '水果类',
+                'vegetable': '蔬菜类',
+                'protein': '蛋白质类',
+                'dairy': '乳制品'
+            };
+            
+            const grouped = {};
+            foods.forEach(food => {
+                const cat = food.category || 'other';
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(food);
+            });
+            
+            let html = '<option value="">请选择食物</option>';
+            
+            for (const [category, items] of Object.entries(grouped)) {
+                const catName = categoryMap[category] || '其他';
+                html += `<optgroup label="${catName}">`;
+                items.forEach(food => {
+                    const carbDisplay = food.carb > 0 ? food.carb : '未知';
+                    html += `<option value="${food.carb}" data-name="${food.name}">${food.name} (${carbDisplay}g/100g)</option>`;
+                });
+                html += '</optgroup>';
+            }
+            
+            foodSelect.innerHTML = html;
+        }
+        
+        // 备用本地数据
+        function useLocalFoodData() {
+            const localFoods = [
+                { name: '白米饭', carb: 28, category: 'grain' },
+                { name: '糙米饭', carb: 23, category: 'grain' },
+                { name: '白面包', carb: 49, category: 'grain' },
+                { name: '全麦面包', carb: 41, category: 'grain' },
+                { name: '燕麦片', carb: 66, category: 'grain' },
+                { name: '馒头', carb: 45, category: 'grain' },
+                { name: '面条', carb: 25, category: 'grain' },
+                { name: '红薯', carb: 20, category: 'grain' },
+                { name: '土豆', carb: 17, category: 'grain' },
+                { name: '苹果', carb: 14, category: 'fruit' },
+                { name: '香蕉', carb: 23, category: 'fruit' },
+                { name: '橙子', carb: 12, category: 'fruit' },
+                { name: '葡萄', carb: 17, category: 'fruit' },
+                { name: '西瓜', carb: 8, category: 'fruit' },
+                { name: '芒果', carb: 15, category: 'fruit' },
+                { name: '牛奶', carb: 5, category: 'dairy' },
+                { name: '酸奶(无糖)', carb: 6, category: 'dairy' },
+                { name: '酸奶(加糖)', carb: 15, category: 'dairy' },
+            ];
+            foodList = localFoods;
+            renderFoodOptions(localFoods);
+        }
+
+        function calculateCarb() {
+            const foodSelect = document.getElementById('food-select');
+            const carbPer100 = document.getElementById('carb-per-100');
+            const foodWeight = document.getElementById('food-weight');
+            const resultCard = document.getElementById('result-card');
+            const resultValue = document.getElementById('result-value');
+            const resultTips = document.getElementById('result-tips');
+
+            // 获取碳水含量
+            let carbContent = parseFloat(carbPer100.value) || parseFloat(foodSelect.value) || 0;
+            let weight = parseFloat(foodWeight.value) || 0;
+
+            if (carbContent === 0 || weight === 0) {
+                alert('请选择食物或输入碳水含量和重量');
+                return;
+            }
+
+            // 计算
+            const totalCarb = (carbContent * weight / 100).toFixed(1);
+
+            // 显示结果
+            resultCard.style.display = 'block';
+            resultValue.textContent = totalCarb;
+
+            // 提示信息
+            if (totalCarb <= 15) {
+                resultTips.textContent = '✅ 碳水含量较低，适合作为加餐或配菜';
+                resultTips.style.color = '#10B981';
+            } else if (totalCarb <= 45) {
+                resultTips.textContent = '👍 碳水含量适中，适合作为正餐的一部分';
+                resultTips.style.color = '#F59E0B';
+            } else {
+                resultTips.textContent = '⚠️ 碳水含量较高，建议减少份量或搭配蛋白质';
+                resultTips.style.color = '#EF4444';
+            }
+
+            // 滚动到结果
+            resultCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 选择食物时自动填充
+        document.getElementById('food-select').addEventListener('change', function() {
+            document.getElementById('carb-per-100').value = '';
+        });
+    </script>
+</body>
+</html>

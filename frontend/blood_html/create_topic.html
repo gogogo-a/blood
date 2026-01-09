@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建话题</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/create_topic.css">
+    <script src="js/theme.js"></script>
+    <script src="js/ckeditor.js"></script>
+</head>
+<body>
+    <main class="create-topic-container">
+        <h1>创建新话题</h1>
+        
+        <form id="create-topic-form">
+            <!-- 话题标题 -->
+            <div class="form-group">
+                <label for="topic-title">话题标题</label>
+                <input type="text" id="topic-title" maxlength="255" required>
+            </div>
+            
+            <!-- 话题分类 -->
+            <div class="form-group">
+                <label for="topic-category">话题分类</label>
+                <select id="topic-category">
+                    <option value="">请选择分类</option>
+                </select>
+            </div>
+            
+            <!-- 话题内容 -->
+            <div class="form-group">
+                <label for="topic-content">话题内容</label>
+                <div id="editor"></div>
+            </div>
+            
+            <!-- 提交按钮 -->
+            <button type="submit" class="submit-button">发布话题</button>
+        </form>
+    </main>
+    <script src="js/config.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/create_topic.js"></script>
+</body>
+</html>

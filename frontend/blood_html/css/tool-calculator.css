@@ -1,0 +1,191 @@
+/* ========================================
+   计算器工具通用样式
+   ======================================== */
+
+/* 计算卡片 */
+.calc-card {
+    background: var(--detail-card-bg);
+    border-radius: var(--detail-radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--detail-shadow);
+}
+
+.calc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.calc-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.calc-form label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--detail-text-primary);
+}
+
+.calc-form input,
+.calc-form select {
+    padding: 14px 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--detail-input-bg);
+    font-size: 16px;
+    color: var(--detail-text-primary);
+    transition: var(--detail-transition);
+}
+
+.calc-form input:focus,
+.calc-form select:focus {
+    outline: none;
+    background: var(--detail-card-bg);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+.calc-form input::placeholder {
+    color: var(--detail-text-secondary);
+}
+
+.calc-btn {
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--detail-accent);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--detail-transition);
+}
+
+.calc-btn:hover {
+    background: #0056CC;
+    transform: scale(1.02);
+}
+
+.calc-btn:active {
+    transform: scale(0.98);
+}
+
+/* 结果卡片 */
+.result-card {
+    background: var(--detail-card-bg);
+    border-radius: var(--detail-radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--detail-shadow);
+    text-align: center;
+}
+
+.result-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--detail-text-secondary);
+    margin-bottom: 16px;
+}
+
+.result-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.result-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--detail-accent);
+    font-feature-settings: 'tnum';
+}
+
+.result-unit {
+    font-size: 18px;
+    color: var(--detail-text-secondary);
+}
+
+.result-tips {
+    padding: 12px 16px;
+    background: var(--detail-input-bg);
+    border-radius: 10px;
+}
+
+.result-tips p {
+    font-size: 14px;
+    margin: 0;
+}
+
+/* 信息卡片 */
+.info-card {
+    background: var(--detail-card-bg);
+    border-radius: var(--detail-radius);
+    padding: 20px;
+    box-shadow: var(--detail-shadow);
+}
+
+.info-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--detail-text-primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list li {
+    font-size: 14px;
+    color: var(--detail-text-secondary);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--detail-input-bg);
+    line-height: 1.5;
+}
+
+.info-list li:last-child {
+    border-bottom: none;
+}
+
+.info-list strong {
+    color: var(--detail-accent);
+}
+
+/* 输入组（带单位） */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-group input {
+    flex: 1;
+}
+
+.input-unit {
+    font-size: 14px;
+    color: var(--detail-text-secondary);
+    white-space: nowrap;
+}
+
+/* 双列布局 */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

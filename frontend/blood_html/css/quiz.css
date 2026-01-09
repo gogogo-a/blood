@@ -1,0 +1,1203 @@
+/* ========================================
+   健康知识问答样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --quiz-bg: #F8F9FB;
+    --quiz-card: #FFFFFF;
+    --quiz-text: #1D1D1F;
+    --quiz-text-secondary: #86868B;
+    --quiz-input-bg: #F5F5F7;
+    --quiz-border: #E5E5EA;
+}
+
+[data-theme="dark"] {
+    --quiz-bg: #000000;
+    --quiz-card: #1C1C1E;
+    --quiz-text: #FFFFFF;
+    --quiz-text-secondary: #98989D;
+    --quiz-input-bg: #2C2C2E;
+    --quiz-border: #3A3A3C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--quiz-bg);
+    color: var(--quiz-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-bottom: 40px;
+}
+
+/* 顶部状态栏 */
+.status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.2s;
+}
+
+.back-btn:hover {
+    background: rgba(0, 122, 255, 0.1);
+}
+
+.status-bar h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--quiz-text);
+}
+
+.balance-display {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3CC 100%);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #B8860B;
+}
+
+/* ========================================
+   关卡选择界面 - Apple Health 风格
+   ======================================== */
+.level-select {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.level-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.level-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--quiz-text);
+    margin-bottom: 8px;
+}
+
+.level-tip {
+    font-size: 14px;
+    color: var(--quiz-text-secondary);
+}
+
+/* 关卡网格 */
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* 关卡卡片 - Apple Health 风格 */
+.level-card {
+    position: relative;
+    background: var(--quiz-card);
+    border-radius: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 2px solid transparent;
+}
+
+[data-theme="dark"] .level-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.level-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #007AFF, #5856D6);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 122, 255, 0.15);
+    border-color: rgba(0, 122, 255, 0.3);
+}
+
+.level-card:hover::before {
+    opacity: 1;
+}
+
+.level-card:active {
+    transform: scale(0.98);
+}
+
+/* 已通关状态 */
+.level-card.passed {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    border-color: rgba(52, 199, 89, 0.3);
+}
+
+[data-theme="dark"] .level-card.passed {
+    background: linear-gradient(135deg, #1B3D1F 0%, #2E5233 100%);
+}
+
+.level-card.passed::before {
+    background: linear-gradient(90deg, #34C759, #30D158);
+    opacity: 1;
+}
+
+/* 锁定状态 */
+.level-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.3);
+}
+
+.level-card.locked:hover {
+    transform: none;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border-color: transparent;
+}
+
+/* 关卡图标 */
+.level-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.level-card.passed .level-icon {
+    background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+}
+
+.level-card.locked .level-icon {
+    background: var(--quiz-border);
+    box-shadow: none;
+}
+
+/* 关卡编号 */
+.level-number {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--quiz-text-secondary);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 关卡名称 */
+.level-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--quiz-text);
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+/* 关卡描述 */
+.level-desc {
+    font-size: 13px;
+    color: var(--quiz-text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 关卡底部信息 */
+.level-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--quiz-border);
+}
+
+/* 奖励显示 */
+.level-reward {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #B8860B;
+}
+
+.level-reward .sugar-bean-icon {
+    font-size: 16px;
+}
+
+/* 状态标签 */
+.level-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.level-status.passed {
+    background: rgba(52, 199, 89, 0.15);
+    color: #34C759;
+}
+
+.level-status.locked {
+    background: var(--quiz-input-bg);
+    color: var(--quiz-text-secondary);
+}
+
+.level-status.available {
+    background: rgba(0, 122, 255, 0.1);
+    color: #007AFF;
+}
+
+/* 通关勾选图标 */
+.level-check {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background: #34C759;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(52, 199, 89, 0.4);
+}
+
+.level-check svg {
+    width: 14px;
+    height: 14px;
+    fill: white;
+}
+
+/* 锁定图标 */
+.level-lock {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background: var(--quiz-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.level-lock svg {
+    width: 12px;
+    height: 12px;
+    fill: var(--quiz-text-secondary);
+}
+
+/* 进度总结 */
+.progress-summary {
+    text-align: center;
+    padding: 20px;
+    background: var(--quiz-card);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .progress-summary {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.progress-text {
+    font-size: 15px;
+    color: var(--quiz-text-secondary);
+}
+
+.progress-text em {
+    font-style: normal;
+    font-weight: 700;
+    color: #007AFF;
+}
+
+/* 关卡信息卡片 */
+.level-info-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--quiz-card);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .level-info-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.level-badge {
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.level-info-card .level-name {
+    flex: 1;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--quiz-text);
+    margin: 0;
+}
+
+.level-info-card .level-reward {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #B8860B;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3CC 100%);
+    padding: 6px 12px;
+    border-radius: 10px;
+}
+
+/* 下一关按钮 */
+.btn-next-level {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 16px rgba(52, 199, 89, 0.3);
+}
+
+.btn-next-level:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 199, 89, 0.4);
+}
+
+.btn-next-level:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+    .container {
+        padding: 16px 12px;
+        padding-bottom: 40px;
+    }
+
+    .level-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .level-card {
+        padding: 16px;
+    }
+    
+    .level-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+        border-radius: 14px;
+    }
+    
+    .level-header h2 {
+        font-size: 24px;
+    }
+
+    .status-bar {
+        margin-bottom: 20px;
+    }
+
+    .status-bar h1 {
+        font-size: 16px;
+    }
+
+    .balance-display {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+
+    .question-card {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .question-text {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .option-btn {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+
+    .option-letter {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+    }
+
+    .option-text {
+        font-size: 14px;
+    }
+
+    .completion-card {
+        padding: 32px 20px;
+        border-radius: 20px;
+    }
+
+    .completion-icon {
+        font-size: 56px;
+    }
+
+    .completion-card h2 {
+        font-size: 22px;
+    }
+
+    .completion-stats {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .stat-item {
+        min-width: 80px;
+        padding: 12px 16px;
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+
+    .completion-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-restart, .btn-back {
+        width: 100%;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 12px 10px;
+        padding-bottom: 36px;
+    }
+
+    .status-bar {
+        margin-bottom: 16px;
+    }
+
+    .back-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .status-bar h1 {
+        font-size: 15px;
+    }
+
+    .balance-display {
+        padding: 5px 10px;
+        font-size: 13px;
+        border-radius: 16px;
+    }
+
+    .level-header {
+        margin-bottom: 20px;
+    }
+
+    .level-header h2 {
+        font-size: 22px;
+    }
+
+    .level-tip {
+        font-size: 13px;
+    }
+
+    .level-grid {
+        gap: 10px;
+    }
+
+    .level-card {
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .level-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+    }
+
+    .level-number {
+        font-size: 12px;
+    }
+
+    .level-name {
+        font-size: 15px;
+    }
+
+    .level-desc {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .level-footer {
+        padding-top: 10px;
+    }
+
+    .level-reward {
+        font-size: 13px;
+    }
+
+    .level-status {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+
+    .progress-summary {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .progress-text {
+        font-size: 14px;
+    }
+
+    .game-info-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .info-value {
+        font-size: 18px;
+    }
+
+    .info-label {
+        font-size: 11px;
+    }
+
+    .question-card {
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+
+    .question-badge {
+        gap: 6px;
+        margin-bottom: 14px;
+    }
+
+    .difficulty, .category {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+
+    .question-text {
+        font-size: 15px;
+        margin-bottom: 18px;
+    }
+
+    .options-container {
+        gap: 10px;
+    }
+
+    .option-btn {
+        padding: 12px 14px;
+        gap: 10px;
+        border-radius: 12px;
+    }
+
+    .option-letter {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+        border-radius: 8px;
+    }
+
+    .option-text {
+        font-size: 13px;
+    }
+
+    .result-feedback {
+        padding: 20px;
+        border-radius: 14px;
+    }
+
+    .result-icon {
+        font-size: 40px;
+    }
+
+    .result-text {
+        font-size: 18px;
+    }
+
+    .result-explanation {
+        font-size: 13px;
+    }
+
+    .btn-next {
+        padding: 12px 28px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
+
+    .completion-card {
+        padding: 28px 16px;
+        border-radius: 18px;
+    }
+
+    .completion-icon {
+        font-size: 48px;
+        margin-bottom: 12px;
+    }
+
+    .completion-card h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .completion-stats {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .stat-item {
+        min-width: 70px;
+        padding: 10px 14px;
+        border-radius: 14px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+    }
+
+    .completion-message {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .btn-restart, .btn-back {
+        padding: 12px 24px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+
+    .level-info-card {
+        padding: 14px 16px;
+        gap: 12px;
+        border-radius: 14px;
+    }
+
+    .level-badge {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .level-info-card .level-name {
+        font-size: 15px;
+    }
+
+    .level-info-card .level-reward {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+
+    .btn-next-level {
+        padding: 12px 24px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+}
+
+/* 游戏信息卡片 */
+.game-info-card {
+    display: flex;
+    justify-content: space-between;
+    background: var(--quiz-card);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.info-item {
+    text-align: center;
+    flex: 1;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--quiz-text-secondary);
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--quiz-text);
+}
+
+.info-value.earned {
+    color: #34C759;
+}
+
+/* 进度条 */
+.progress-bar {
+    height: 6px;
+    background: var(--quiz-border);
+    border-radius: 3px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 问题卡片 */
+.question-card {
+    background: var(--quiz-card);
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    animation: cardSlideIn 0.4s ease;
+}
+
+[data-theme="dark"] .question-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.question-badge {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.difficulty, .category {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.difficulty {
+    background: #E8F5E9;
+    color: #2E7D32;
+}
+
+.difficulty.medium {
+    background: #FFF3E0;
+    color: #E65100;
+}
+
+.difficulty.hard {
+    background: #FFEBEE;
+    color: #C62828;
+}
+
+.category {
+    background: #E3F2FD;
+    color: #1565C0;
+}
+
+.question-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--quiz-text);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* 选项容器 */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--quiz-input-bg);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+}
+
+.option-btn:hover:not(.disabled) {
+    background: var(--quiz-card);
+    border-color: #007AFF;
+    transform: translateX(4px);
+}
+
+.option-btn.selected {
+    background: #E8F0FE;
+    border-color: #007AFF;
+}
+
+.option-btn.correct {
+    background: #E6F4EA;
+    border-color: #34C759;
+}
+
+.option-btn.wrong {
+    background: #FEEAE6;
+    border-color: #FF3B30;
+}
+
+.option-btn.disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.option-letter {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--quiz-card);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--quiz-text-secondary);
+    flex-shrink: 0;
+    transition: all 0.25s;
+}
+
+.option-btn.selected .option-letter {
+    background: #007AFF;
+    color: #FFFFFF;
+}
+
+.option-btn.correct .option-letter {
+    background: #34C759;
+    color: #FFFFFF;
+}
+
+.option-btn.wrong .option-letter {
+    background: #FF3B30;
+    color: #FFFFFF;
+}
+
+.option-text {
+    font-size: 15px;
+    color: var(--quiz-text);
+    flex: 1;
+}
+
+/* 结果反馈 */
+.result-feedback {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    background: var(--quiz-card);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    animation: feedbackPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes feedbackPop {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.result-feedback.show {
+    display: block;
+}
+
+.result-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.result-text {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.result-text.correct {
+    color: #34C759;
+}
+
+.result-text.wrong {
+    color: #FF3B30;
+}
+
+.result-explanation {
+    font-size: 14px;
+    color: var(--quiz-text-secondary);
+    line-height: 1.6;
+}
+
+/* 操作按钮 */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-next {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+}
+
+.btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+}
+
+/* 完成卡片 */
+.completion-card {
+    background: var(--quiz-card);
+    border-radius: 24px;
+    padding: 40px 24px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    animation: completionSlide 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+[data-theme="dark"] .completion-card {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes completionSlide {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.completion-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.completion-card h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--quiz-text);
+    margin-bottom: 24px;
+}
+
+.completion-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 16px 20px;
+    background: var(--quiz-input-bg);
+    border-radius: 16px;
+    min-width: 90px;
+}
+
+.stat-item.highlight {
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3CC 100%);
+}
+
+.stat-item.highlight .stat-value {
+    color: #B8860B;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #007AFF;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--quiz-text-secondary);
+}
+
+.completion-message {
+    font-size: 15px;
+    color: var(--quiz-text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+.completion-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-restart, .btn-back {
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-restart {
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+}
+
+.btn-restart:hover {
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    background: var(--quiz-input-bg);
+    color: var(--quiz-text);
+}
+
+.btn-back:hover {
+    background: var(--quiz-border);
+}
+
+/* 响应式 */
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+
+    .question-card {
+        padding: 20px 16px;
+    }
+
+    .question-text {
+        font-size: 16px;
+    }
+
+    .option-btn {
+        padding: 14px 16px;
+    }
+
+    .completion-stats {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .stat-item {
+        min-width: 80px;
+        padding: 12px 16px;
+    }
+}

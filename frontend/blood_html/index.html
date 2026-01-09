@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>血糖管理系统</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/public.css">
+    <script src="js/theme.js"></script>
+</head>
+<body>
+    <div class="container">
+    <!-- 智能问候卡片 -->
+    <div class="ai-greeting-card" id="ai-greeting">
+        <div class="greeting-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#007AFF">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+        </div>
+        <div class="greeting-content">
+            <div class="greeting-text" id="greeting-text">正在分析您的健康数据...</div>
+            <div class="greeting-sub" id="greeting-sub"></div>
+        </div>
+    </div>
+
+    <!-- 快捷入口 -->
+    <div class="quick-entry-bar">
+        <a href="calendar.html" class="quick-entry-item">
+            <span class="entry-icon">📅</span>
+            <span class="entry-text">健康日历</span>
+        </a>
+        <a href="report.html" class="quick-entry-item">
+            <span class="entry-icon">📊</span>
+            <span class="entry-text">血糖报告</span>
+        </a>
+        <a href="quiz.html" class="quick-entry-item">
+            <span class="entry-icon">🎮</span>
+            <span class="entry-text">健康闯关</span>
+        </a>
+        <a href="chat.html" class="quick-entry-item">
+            <span class="entry-icon">🤖</span>
+            <span class="entry-text">AI助手</span>
+        </a>
+    </div>
+
+    <!-- 每日健康知识卡片 -->
+    <div class="health-tip-card" id="health-tip-card">
+        <div class="tip-header">
+            <div class="tip-badge">
+                <span class="tip-icon">💡</span>
+                <span>每日健康知识</span>
+            </div>
+            <button class="tip-refresh-btn" onclick="refreshHealthTip()" title="换一条">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="tip-content" id="tip-content">
+            <p class="tip-text" id="tip-text">加载中...</p>
+        </div>
+        <div class="tip-footer">
+            <button class="tip-action-btn" onclick="likeHealthTip()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span id="tip-like-count">0</span>
+            </button>
+            <button class="tip-action-btn" onclick="shareHealthTip()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+                </svg>
+                分享
+            </button>
+        </div>
+    </div>
+
+    <!-- 血糖目标卡片 -->
+    <div class="goal-card" id="goal-card">
+        <div class="goal-header">
+            <div class="goal-title">
+                <span class="goal-icon">🎯</span>
+                <span>本周血糖目标</span>
+            </div>
+            <button class="goal-edit-btn" onclick="openGoalModal()">设置</button>
+        </div>
+        <div class="goal-content">
+            <div class="goal-ring-container">
+                <svg class="goal-ring" viewBox="0 0 100 100">
+                    <circle class="goal-ring-bg" cx="50" cy="50" r="42"/>
+                    <circle class="goal-ring-progress" cx="50" cy="50" r="42" id="goal-progress-ring"/>
+                </svg>
+                <div class="goal-ring-text">
+                    <span class="goal-percent" id="goal-percent">0%</span>
+                    <span class="goal-label">达标率</span>
+                </div>
+            </div>
+            <div class="goal-stats">
+                <div class="goal-stat">
+                    <span class="stat-num" id="goal-achieved">0</span>
+                    <span class="stat-label">达标天数</span>
+                </div>
+                <div class="goal-stat">
+                    <span class="stat-num" id="goal-total">7</span>
+                    <span class="stat-label">目标天数</span>
+                </div>
+                <div class="goal-stat">
+                    <span class="stat-num" id="goal-range">3.9-6.1</span>
+                    <span class="stat-label">目标范围</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用药提醒卡片 -->
+    <div class="medication-reminder-card" id="medication-reminder">
+        <div class="reminder-header">
+            <div class="reminder-title">
+                <span class="reminder-icon">💊</span>
+                <span>今日用药提醒</span>
+            </div>
+            <span class="reminder-date" id="reminder-date"></span>
+        </div>
+        <div class="reminder-list" id="reminder-list">
+            <!-- 动态生成 -->
+        </div>
+        <div class="reminder-empty" id="reminder-empty" style="display: none;">
+            <span class="empty-icon">✨</span>
+            <span class="empty-text">今日暂无用药计划</span>
+        </div>
+    </div>
+
+    <!-- 血糖目标设置弹窗 -->
+    <div id="goal-modal" class="modal">
+        <div class="modal-content goal-modal-content">
+            <span class="close-btn" onclick="closeGoalModal()">&times;</span>
+            <h3>🎯 设置血糖目标</h3>
+            <form id="goal-form">
+                <div class="form-group">
+                    <label>空腹血糖目标范围 (mmol/L)</label>
+                    <div class="range-inputs">
+                        <input type="number" step="0.1" id="goal-min" placeholder="最低" value="3.9">
+                        <span class="range-separator">~</span>
+                        <input type="number" step="0.1" id="goal-max" placeholder="最高" value="6.1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>餐后血糖目标 (mmol/L)</label>
+                    <input type="number" step="0.1" id="goal-postprandial" placeholder="餐后2小时血糖上限" value="7.8">
+                </div>
+                <div class="form-group">
+                    <label>每周目标达标天数</label>
+                    <div class="goal-days-selector">
+                        <button type="button" class="day-btn" data-days="5">5天</button>
+                        <button type="button" class="day-btn active" data-days="6">6天</button>
+                        <button type="button" class="day-btn" data-days="7">7天</button>
+                    </div>
+                </div>
+                <button type="submit" class="save-goal-btn">保存目标</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- AI 健康洞察卡片 -->
+    <div class="ai-insight-card" id="ai-insight" style="display: none;">
+        <div class="insight-header">
+            <span class="insight-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>
+                </svg>
+                AI 洞察
+            </span>
+            <span class="insight-time" id="insight-time"></span>
+        </div>
+        <div class="insight-content" id="insight-content"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="header" id="header">
+        <div class="user-info">
+            <div class="info-card">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M13 5.08c3.06.44 5.5 2.88 5.94 5.92h2.02c-.46-4.17-3.79-7.5-7.96-7.96V5.08zM5.08 11c.44-3.04 2.88-5.48 5.92-5.92V3.04C6.83 3.5 3.5 6.83 3.04 11h2.04zM11 18.92c-3.04-.44-5.48-2.88-5.92-5.92H3.04c.46 4.17 3.79 7.5 7.96 7.96v-2.04zm7.94-5.92c-.44 3.04-2.88 5.48-5.94 5.92v2.04c4.17-.46 7.5-3.79 7.96-7.96h-2.02zM12 8l-4 4h3v4h2v-4h3l-4-4z"/>
+                    </svg>
+                    身高
+                </h3>
+                <div class="value" id="user-height">-- cm</div>
+            </div>
+            <div class="info-card">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm1-11h-2v3H8v2h3v3h2v-3h3v-2h-3V8z"/>
+                    </svg>
+                    体重
+                </h3>
+                <div class="value" id="user-weight">-- kg</div>
+            </div>
+            <div class="info-card">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    当前血糖
+                </h3>
+                <div class="value" id="user-blood-sugar">-- mmol/L</div>
+                <div class="status-badge" id="blood-sugar-status">--</div>
+                <div class="status-tip" id="blood-sugar-tip">--</div>
+            </div>
+            <div class="info-card">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm3-6c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/>
+                    </svg>
+                    BMI指数
+                </h3>
+                <div class="value" id="user-bmi">--</div>
+                <div class="status-badge" id="bmi-status">--</div>
+                <div class="status-tip" id="bmi-tip">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-btn">&times;</span>
+            <form id="user-detail-form">
+                <div class="form-group">
+                    <label for="form-height">身高 (cm)</label>
+                    <input type="number" id="form-height" name="height" required>
+                </div>
+                <div class="form-group">
+                    <label for="form-weight">体重 (kg)</label>
+                    <input type="number" id="form-weight" name="weight" required>
+                </div>
+                <div class="form-group">
+                    <label for="form-blood-sugar">当前血糖 (mmol/L)</label>
+                    <input type="number" step="0.1" id="form-blood-sugar" name="blood-sugar" required>
+                </div>
+                <button type="submit">保存</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加血糖记录模态框 -->
+    <div id="add-blood-sugar-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-add-btn">&times;</span>
+            <h3>添加血糖记录</h3>
+            <form id="add-blood-sugar-form">
+                <div class="form-group">
+                    <label for="meal-time">餐次</label>
+                    <select id="meal-time" name="meal-time" required>
+                        <option value="1">早餐</option>
+                        <option value="2">午餐</option>
+                        <option value="3">晚餐</option>
+                        <option value="4">下午茶</option>
+                        <option value="5">夜宵</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fasting-glucose">餐前血糖 (mmol/L)</label>
+                    <input type="text"  pattern="\d+(\.\d+)?" title="请输入数字（如 5.5）"id="fasting-glucose" name="fasting-glucose"   required>
+                </div>
+                <div class="form-group">
+                    <label for="postprandial-glucose">餐后血糖 (mmol/L)</label>
+                    <input type="text"  pattern="\d+(\.\d+)?" title="请输入数字（如 5.5）" id="postprandial-glucose" name="postprandial-glucose" required>
+                </div>
+                <div class="form-group">
+                    <label for="carbohydrates">碳水化合物 (g)</label>
+                    <input type="text"  pattern="\d+(\.\d+)?" title="请输入数字（如 5.5）" id="carbohydrates" name="carbohydrates"   required>
+                </div>
+                <button type="submit">添加记录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加用药记录模态框 -->
+    <div id="add-medication-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-medication-btn">&times;</span>
+            <h3>添加用药记录</h3>
+            <form id="add-medication-form">
+                <div class="form-group">
+                    <label for="medication-type">用药类型</label>
+                    <select id="medication-type" name="medication-type" required>
+                        <option value="1">注射</option>
+                        <option value="2">口服</option>
+                        <option value="3">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="medication-name">用药名称</label>
+                    <input type="text" id="medication-name" name="medication-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="medication-time">用药时间</label>
+                    <input type="datetime-local" id="medication-time" name="medication-time" required>
+                </div>
+                <div class="form-group">
+                    <label for="dosage">剂量 (mg)</label>
+                    <input type="number" id="dosage" name="dosage" step="0.1" required>
+                </div>
+                <button type="submit">添加记录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加运动记录模态框 -->
+    <div id="add-exercise-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-exercise-btn">&times;</span>
+            <h3>添加运动记录</h3>
+            <form id="add-exercise-form">
+                <div class="form-group">
+                    <label for="exercise-program">运动项目</label>
+                    <input type="text" id="exercise-program" name="exercise-program" required>
+                </div>
+                <div class="form-group">
+                    <label for="intensity">运动强度</label>
+                    <select id="intensity" name="intensity" required>
+                        <option value="1">轻度</option>
+                        <option value="2">中度</option>
+                        <option value="3">重度</option>
+                        <option value="4">不明</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exercise-time">运动时间</label>
+                    <input type="datetime-local" id="exercise-time" name="exercise-time" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration">持续时间 (分钟)</label>
+                    <input type="number" id="duration" name="duration" required>
+                </div>
+                <button type="submit">添加记录</button>
+            </form>
+        </div>
+    </div>
+
+        <div class="main-content">
+           
+            <div class="card">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span>血糖记录</span>
+                    <button class="add-btn1">添加记录</button>
+                </h2>
+                <div class="blood-sugar-log-container" id="blood-sugar-log-container"></div>
+       
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5 0 1.93-1.57 3.5-3.5 3.5s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+                    </svg>
+                    <span>用药记录</span>
+                    <button class="add-medication-btn">添加用药</button>
+                </h2>
+                <div id="medication-log-container" class="medication-log-container">
+                    <!-- 用药记录将动态填充到这里 -->
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+                    </svg>
+                    <span>运动记录</span>
+                    <button class="add-btn3">添加运动</button>
+                </h2>
+                <ul class="exercise-list" id="exercise-list">
+                   
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                        <path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/>
+                    </svg>
+                    <span>血糖趋势</span>
+                </h2>
+                <div class="chart-container" id="blood-sugar-trend-chart" style="width: 100%; height: 300px;"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- 快捷记录浮动按钮 -->
+    <div class="fab-container" id="fab-container">
+        <div class="fab-menu" id="fab-menu">
+            <button class="fab-item" onclick="openAddModal('blood-sugar')" data-tooltip="记录血糖">
+                <span class="fab-item-icon">🩸</span>
+            </button>
+            <button class="fab-item" onclick="openAddModal('medication')" data-tooltip="记录用药">
+                <span class="fab-item-icon">💊</span>
+            </button>
+            <button class="fab-item" onclick="openAddModal('exercise')" data-tooltip="记录运动">
+                <span class="fab-item-icon">🏃</span>
+            </button>
+            <button class="fab-item" onclick="location.href='chat.html'" data-tooltip="AI助手">
+                <span class="fab-item-icon">🤖</span>
+            </button>
+        </div>
+        <button class="fab-main" id="fab-main" onclick="toggleFabMenu()">
+            <svg class="fab-icon-add" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            <svg class="fab-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- 每日打卡提醒弹窗 -->
+    <div class="checkin-reminder-modal" id="checkin-reminder-modal">
+        <div class="checkin-reminder-content">
+            <button class="checkin-reminder-close" onclick="closeCheckinReminder()">×</button>
+            <div class="checkin-reminder-icon">🔥</div>
+            <h3 class="checkin-reminder-title">今日还未打卡</h3>
+            <p class="checkin-reminder-desc">坚持打卡，获得糖豆奖励<br>连续打卡奖励更丰厚！</p>
+            <div class="checkin-reminder-reward">
+                <span class="reward-icon">🍬</span>
+                <span class="reward-text">打卡可获得 <em id="reminder-reward-num">2</em> 糖豆</span>
+            </div>
+            <div class="checkin-reminder-streak" id="reminder-streak-info">
+                <span class="streak-icon">📅</span>
+                <span class="streak-text">已连续打卡 <em id="reminder-streak-days">0</em> 天</span>
+            </div>
+            <button class="checkin-reminder-btn" id="reminder-checkin-btn" onclick="doCheckinFromReminder()">
+                <span class="btn-icon">👆</span>
+                <span>立即打卡</span>
+            </button>
+            <button class="checkin-reminder-later" onclick="closeCheckinReminder()">稍后再说</button>
+        </div>
+    </div>
+
+    <!-- 打卡成功弹窗 -->
+    <div class="checkin-success-modal" id="checkin-success-modal">
+        <div class="checkin-success-content">
+            <div class="success-icon">🎉</div>
+            <h3>打卡成功！</h3>
+            <p>连续打卡 <span id="success-streak-days">1</span> 天</p>
+            <div class="success-reward">+<span id="success-reward-num">2</span> 糖豆</div>
+            <div class="success-bonus" id="success-bonus" style="display:none;"></div>
+            <button class="success-btn" onclick="closeCheckinSuccess()">太棒了</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/index.js"></script>
+    <script defer src="js/navbar.js"></script>
+    <script src="js/echarts.js"></script>
+</body>
+</html>

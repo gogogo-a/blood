@@ -1,0 +1,428 @@
+/* ========================================
+   个人信息页面样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --personal-bg: #F8F9FB;
+    --personal-card: #FFFFFF;
+    --personal-text: #1D1D1F;
+    --personal-text-secondary: #86868B;
+    --personal-input-bg: #F5F5F7;
+    --personal-border: rgba(0, 0, 0, 0.05);
+    --personal-primary: #007AFF;
+    --personal-success: #34C759;
+}
+
+[data-theme="dark"] {
+    --personal-bg: #000000;
+    --personal-card: #1C1C1E;
+    --personal-text: #FFFFFF;
+    --personal-text-secondary: #98989D;
+    --personal-input-bg: #2C2C2E;
+    --personal-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--personal-bg);
+    color: var(--personal-text);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+    padding-bottom: 100px;
+}
+
+/* 个人资料头部卡片 */
+.profile-header {
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 24px;
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    position: relative;
+}
+
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.avatar svg {
+    opacity: 0.9;
+}
+
+.avatar-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-badge:hover {
+    transform: scale(1.1);
+}
+
+.avatar-badge svg {
+    color: var(--personal-primary);
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.profile-level {
+    font-size: 14px;
+    opacity: 0.85;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+/* 信息区块 */
+.info-section {
+    margin-bottom: 16px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--personal-text-secondary);
+}
+
+.section-header svg {
+    color: var(--personal-primary);
+}
+
+.info-card {
+    background: var(--personal-card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .info-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 信息项样式 */
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.info-item:hover {
+    background: var(--personal-input-bg);
+}
+
+.info-item:not(:last-child) {
+    border-bottom: 1px solid var(--personal-border);
+}
+
+.info-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 13px;
+    color: var(--personal-text-secondary);
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--personal-text);
+}
+
+.info-hint {
+    font-size: 12px;
+    color: var(--personal-text-secondary);
+}
+
+.arrow-icon {
+    color: var(--personal-text-secondary);
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+
+/* 会员等级徽章 */
+.level-badge {
+    color: var(--personal-primary) !important;
+    font-weight: 600 !important;
+}
+
+.discount-value {
+    color: var(--personal-success) !important;
+    font-weight: 600 !important;
+}
+
+/* 安全提示 */
+.security-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--personal-text-secondary);
+}
+
+.security-notice svg {
+    color: var(--personal-success);
+}
+
+/* 模态框背景 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.modal.show {
+    display: block;
+}
+
+/* 模态框内容 */
+.modal-content {
+    position: relative;
+    margin: 10% auto;
+    background-color: var(--personal-card);
+    border-radius: 24px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 420px;
+    animation: modalSpringIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+@keyframes modalSpringIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--personal-border);
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--personal-text);
+}
+
+.close-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--personal-input-bg);
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--personal-text-secondary);
+}
+
+.close-btn:hover {
+    background: var(--personal-border);
+    color: var(--personal-text);
+}
+
+/* 表单样式 */
+#edit-form {
+    padding: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--personal-text);
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--personal-input-bg);
+    font-size: 16px;
+    color: var(--personal-text);
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    background: var(--personal-card);
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: var(--personal-text-secondary);
+}
+
+/* 提交按钮 */
+button[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--personal-primary);
+    color: white;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background: #0056CC;
+    box-shadow: 0 6px 16px rgba(0, 122, 255, 0.3);
+}
+
+button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .profile-header {
+        padding: 24px 20px;
+        border-radius: 20px;
+    }
+
+    .avatar {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile-name {
+        font-size: 20px;
+    }
+
+    .info-card {
+        border-radius: 14px;
+    }
+
+    .info-item {
+        padding: 14px 16px;
+    }
+
+    .modal-content {
+        width: 94%;
+        border-radius: 20px;
+    }
+
+    #edit-form {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .avatar svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .profile-name {
+        font-size: 18px;
+    }
+
+    .info-value {
+        font-size: 15px;
+    }
+
+    button[type="submit"] {
+        font-size: 15px;
+        padding: 12px 20px;
+    }
+}

@@ -1,0 +1,535 @@
+/* ========================================
+   血糖分析报告样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --report-bg: #F8F9FB;
+    --report-card: #FFFFFF;
+    --report-text: #1D1D1F;
+    --report-text-secondary: #86868B;
+    --report-input-bg: #F5F5F7;
+    --report-border: #F2F2F7;
+}
+
+[data-theme="dark"] {
+    --report-bg: #000000;
+    --report-card: #1C1C1E;
+    --report-text: #FFFFFF;
+    --report-text-secondary: #98989D;
+    --report-input-bg: #2C2C2E;
+    --report-border: #3A3A3C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--report-bg);
+    color: var(--report-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-bottom: 40px;
+}
+
+/* 顶部导航 */
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.back-btn, .export-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.2s;
+}
+
+.back-btn:hover, .export-btn:hover {
+    background: rgba(0, 122, 255, 0.1);
+}
+
+.top-nav h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--report-text);
+}
+
+/* 时间选择器 */
+.time-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: var(--report-card);
+    padding: 6px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .time-selector {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.time-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--report-text-secondary);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.time-btn.active {
+    background: #007AFF;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.time-btn:hover:not(.active) {
+    background: var(--report-input-bg);
+}
+
+/* 报告概览卡片 */
+.overview-card {
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    box-shadow: 0 8px 32px rgba(0, 122, 255, 0.25);
+}
+
+.report-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.report-icon {
+    font-size: 40px;
+}
+
+.report-title {
+    flex: 1;
+}
+
+.report-title h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.report-title p {
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.health-score {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 16px 20px;
+    border-radius: 16px;
+}
+
+.score-value {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.score-label {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+/* 核心指标网格 */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.metric-card {
+    background: var(--report-card);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s;
+}
+
+[data-theme="dark"] .metric-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+}
+
+.metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.metric-info {
+    flex: 1;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--report-text);
+    line-height: 1.2;
+}
+
+.metric-label {
+    font-size: 13px;
+    color: var(--report-text-secondary);
+    margin-top: 2px;
+}
+
+.metric-unit {
+    font-size: 11px;
+    color: #AEAEB2;
+}
+
+/* 图表卡片 */
+.chart-card {
+    background: var(--report-card);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .chart-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.card-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--report-text);
+}
+
+.chart-container {
+    width: 100%;
+    height: 280px;
+}
+
+/* 分布图容器 */
+.distribution-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.distribution-container .chart-container {
+    flex: 1;
+    height: 220px;
+}
+
+.distribution-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 120px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.legend-info {
+    flex: 1;
+}
+
+.legend-label {
+    font-size: 13px;
+    color: var(--report-text);
+}
+
+.legend-value {
+    font-size: 12px;
+    color: var(--report-text-secondary);
+}
+
+/* 分析卡片 */
+.analysis-card {
+    background: var(--report-card);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .analysis-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.analysis-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.analysis-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    background: var(--report-input-bg);
+    border-radius: 14px;
+}
+
+.analysis-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.analysis-icon.good {
+    background: #E6F4EA;
+}
+
+.analysis-icon.warning {
+    background: #FEF7E0;
+}
+
+.analysis-icon.danger {
+    background: #FEEAE6;
+}
+
+.analysis-text {
+    flex: 1;
+}
+
+.analysis-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--report-text);
+    margin-bottom: 4px;
+}
+
+.analysis-desc {
+    font-size: 13px;
+    color: var(--report-text-secondary);
+    line-height: 1.5;
+}
+
+/* 建议卡片 */
+.suggestion-card {
+    background: var(--report-card);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .suggestion-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ai-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    color: #FFFFFF;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.suggestion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.05) 0%, rgba(88, 86, 214, 0.05) 100%);
+    border-radius: 14px;
+    border-left: 3px solid #007AFF;
+}
+
+.suggestion-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.suggestion-text {
+    font-size: 14px;
+    color: var(--report-text);
+    line-height: 1.5;
+}
+
+/* 时段分析卡片 */
+.period-card {
+    background: var(--report-card);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .period-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.period-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.period-item {
+    text-align: center;
+    padding: 16px 12px;
+    background: var(--report-input-bg);
+    border-radius: 14px;
+    transition: transform 0.2s;
+}
+
+.period-item:hover {
+    transform: translateY(-2px);
+}
+
+.period-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.period-label {
+    font-size: 12px;
+    color: var(--report-text-secondary);
+    margin-bottom: 4px;
+}
+
+.period-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--report-text);
+}
+
+.period-status {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-top: 6px;
+    display: inline-block;
+}
+
+.period-status.good {
+    background: #E6F4EA;
+    color: #1E8E3E;
+}
+
+.period-status.warning {
+    background: #FEF7E0;
+    color: #B06000;
+}
+
+.period-status.danger {
+    background: #FEEAE6;
+    color: #C5221F;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+    .container {
+        padding: 16px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .distribution-container {
+        flex-direction: column;
+    }
+
+    .distribution-legend {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .period-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .report-header {
+        flex-wrap: wrap;
+    }
+
+    .health-score {
+        width: 100%;
+        margin-top: 16px;
+    }
+}

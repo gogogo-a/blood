@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成就徽章 - 血糖管理系统</title>
+    <link rel="stylesheet" href="css/achievements.css">
+    <link rel="stylesheet" href="css/public.css">
+    <script src="js/theme.js"></script>
+    <script defer src="js/navbar.js"></script>
+</head>
+<body>
+    <div class="achievements-container">
+        <!-- 头部 -->
+        <header class="achievements-header">
+            <h1>成就徽章</h1>
+            <p>记录您的健康里程碑</p>
+        </header>
+
+        <!-- 统计卡片 -->
+        <div class="stats-card">
+            <div class="stat-item">
+                <span class="stat-value" id="total-records">0</span>
+                <span class="stat-label">总记录数</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-value" id="unlocked-badges">0</span>
+                <span class="stat-label">已解锁徽章</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-value" id="avg-sugar">--</span>
+                <span class="stat-label">平均血糖</span>
+            </div>
+        </div>
+
+        <!-- 徽章列表 -->
+        <section class="badges-section">
+            <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                    <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/>
+                </svg>
+                全部徽章
+            </h2>
+            <div class="badges-grid" id="badges-grid">
+                <!-- 徽章由JS动态渲染 -->
+            </div>
+        </section>
+
+        <!-- 成就进度 -->
+        <section class="progress-section">
+            <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#86868B">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                成就进度
+            </h2>
+            <div class="progress-list" id="progress-list">
+                <!-- 进度由JS动态渲染 -->
+            </div>
+        </section>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/achievements.js"></script>
+</body>
+</html>

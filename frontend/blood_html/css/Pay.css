@@ -1,0 +1,476 @@
+/* ========================================
+   支付页面样式 - Apple Health 风格
+   ======================================== */
+
+:root {
+    --primary: #007AFF;
+    --secondary: #F5F5F7;
+    --accent: #0056CC;
+    --text: #1D1D1F;
+    --text-light: #86868B;
+    --pay-bg: #F8F9FB;
+    --pay-card: #FFFFFF;
+    --pay-text: #1D1D1F;
+    --pay-text-secondary: #86868B;
+    --pay-input-bg: #F5F5F7;
+    --pay-success: #34C759;
+    --pay-bonus: #FF9500;
+}
+
+[data-theme="dark"] {
+    --pay-bg: #000000;
+    --pay-card: #1C1C1E;
+    --pay-text: #FFFFFF;
+    --pay-text-secondary: #98989D;
+    --pay-input-bg: #2C2C2E;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background: var(--pay-bg);
+    min-height: 100vh;
+    padding: 2rem;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--pay-card);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.04),
+        0 20px 40px rgba(0, 0, 0, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .container {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 余额卡片 */
+.balance-card {
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    color: white;
+}
+
+.balance-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.balance-label {
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.balance-value {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-feature-settings: 'tnum';
+}
+
+.history-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+.history-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.title {
+    color: var(--pay-text);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.section-title {
+    color: var(--pay-text);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.amount-item {
+    padding: 20px 12px;
+    border: 2px solid var(--pay-input-bg);
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--pay-card);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.amount-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 122, 255, 0.3);
+}
+
+.amount-item.active {
+    border-color: var(--primary);
+    background: rgba(0, 122, 255, 0.05);
+}
+
+.amount-item.active .amount-value {
+    color: var(--primary);
+}
+
+.amount-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--pay-text);
+    transition: color 0.2s;
+}
+
+.bonus {
+    font-size: 12px;
+    color: var(--pay-bonus);
+    font-weight: 500;
+}
+
+/* 热门标签 */
+.popular-tag, .best-tag {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+    color: white;
+}
+
+.popular-tag {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF3B30 100%);
+}
+
+.best-tag {
+    background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+}
+
+.amount-item.popular {
+    border-color: rgba(255, 59, 48, 0.3);
+}
+
+.amount-item.best-value {
+    border-color: rgba(52, 199, 89, 0.3);
+}
+
+.custom-amount {
+    margin-bottom: 1.5rem;
+}
+
+.custom-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 14px;
+    background: var(--pay-input-bg);
+    font-size: 16px;
+    text-align: center;
+    color: var(--pay-text);
+    transition: all 0.2s ease;
+}
+
+.custom-input:focus {
+    outline: none;
+    background: var(--pay-card);
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+.custom-input::placeholder {
+    color: var(--pay-text-secondary);
+}
+
+.payment-methods {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.method-item {
+    flex: 1;
+    max-width: 180px;
+    padding: 16px;
+    border: 2px solid var(--pay-input-bg);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 500;
+    color: var(--pay-text);
+    position: relative;
+}
+
+.method-item:hover {
+    border-color: rgba(0, 122, 255, 0.3);
+}
+
+.method-item.active {
+    border-color: var(--primary);
+    background: rgba(0, 122, 255, 0.05);
+}
+
+.method-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+}
+
+.recommend-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+}
+
+/* 支付预览 */
+.pay-preview {
+    background: var(--pay-input-bg);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.preview-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--pay-text-secondary);
+}
+
+.preview-row:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .preview-row:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bonus-row .bonus-text {
+    color: var(--pay-bonus);
+    font-weight: 600;
+}
+
+.total-row {
+    padding-top: 12px;
+}
+
+.total-row span:first-child {
+    font-weight: 600;
+    color: var(--pay-text);
+}
+
+.total-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--pay-success);
+}
+
+.pay-button {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pay-button:hover:not(:disabled) {
+    background: var(--accent);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+}
+
+.pay-button:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.pay-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-amount {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+.error-message {
+    color: #FF3B30;
+    text-align: center;
+    margin-top: 12px;
+    display: none;
+    font-size: 14px;
+}
+
+/* 余额用途说明 */
+.usage-tips {
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--pay-input-bg);
+    border-radius: 14px;
+}
+
+.tips-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pay-text);
+    margin-bottom: 12px;
+}
+
+.tips-title svg {
+    color: var(--primary);
+}
+
+.tips-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tip-item {
+    font-size: 12px;
+    padding: 6px 12px;
+    background: var(--pay-card);
+    border-radius: 20px;
+    color: var(--pay-text-secondary);
+}
+
+/* 安全提示 */
+.security-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--pay-text-secondary);
+}
+
+.security-notice svg {
+    color: var(--pay-success);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1.5rem;
+        border-radius: 20px;
+    }
+
+    .balance-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .history-link {
+        align-self: flex-end;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .amount-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .amount-item {
+        padding: 16px 10px;
+    }
+
+    .amount-value {
+        font-size: 18px;
+    }
+
+    .payment-methods {
+        flex-direction: column;
+    }
+
+    .method-item {
+        max-width: none;
+    }
+
+    .pay-button {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    .tips-list {
+        gap: 6px;
+    }
+
+    .tip-item {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+}
