@@ -1,289 +1,164 @@
-# 胰路护航 - 智能血糖管理系统
+# 智护血糖 - AI 个性化控糖系统
 
 <div align="center">
 
+**慢病管理视角下的 AI 个性化控糖平台**
 
-<!-- 方案2: 如果视频文件在项目中 -->
-<!-- ![演示视频](assets/web主界面演示.mp4) -->
-
-<!-- 方案3: 使用 GitHub 的视频预览 -->
-
-<video controls src=".assets/web主界面演示.mp4" title="web演示"></video>
-
-
-**基于 AI 技术的个性化控糖系统**
-
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
-[![Django](https://img.shields.io/badge/Django-3.2-green.svg)](https://www.djangoproject.com/)
-[![Vue.js](https://img.shields.io/badge/Vue.js-3.0-brightgreen.svg)](https://vuejs.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB.svg)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-3.2-0C4B33.svg)](https://www.djangoproject.com/)
+[![Vue](https://img.shields.io/badge/Vue-3-42B883.svg)](https://vuejs.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1.svg)](https://www.mysql.com/)
+[![Neo4j](https://img.shields.io/badge/Neo4j-Knowledge_Graph-4581C3.svg)](https://neo4j.com/)
 
 </div>
 
-## 📖 项目简介
+## 项目概览
 
-胰路护航是一款基于 AI 技术的个性化控糖系统，旨在应对全球日益严峻的糖尿病管理挑战。系统通过引入糖尿病知识图谱和 AI 技术，为不同患者提供个性化辅助治疗方案，提升治疗依从性。
+智护血糖是一套面向糖尿病慢病管理场景的 AI 个性化控糖系统，覆盖 Web 信息平台、移动端健康管理、后台管理和智能问答服务。系统围绕“数据记录 - 个性化推荐 - 专业问答 - 持续反馈”的闭环，帮助用户记录血糖、饮食、运动、用药等健康数据，并基于知识图谱和大模型能力提供控糖建议。
 
-### 🏆 获奖情况
-- 获得 "知糖助手平台 V1.0" 计算机软件著作权
-- 传智杯全国 IT 技能大赛 Web 网页开发挑战赛 B 组**国赛一等奖**
+这个项目来自校园竞赛与科研实践，我主要承担后端全栈和 AI 应用落地相关工作，包括 Django 后端业务、功能联调、用户健康数据管理、AI 问答与推荐能力接入、后台管理能力，以及 Web 端和移动端功能协同。
 
-## ✨ 核心特性
+## 演示视频
 
-### 🤖 AI 核心算法
+[点击查看项目演示视频](https://blood-sugar.oss-cn-beijing.aliyuncs.com/%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4)
 
-#### 1. 个性化控糖 DSACPRA 算法
-- **LSTM 长短期记忆网络**：捕捉血糖波动、用药时间等长序列数据的时序特征
-- **协同过滤模块**：挖掘相似患者群体的健康数据特征与行为模式
-- **多层感知机 (MLP)**：处理多维复杂数据，生成个性化推荐结果
+## 项目成果
 
-#### 2. 知识图谱赋能 Deepseek 精准问答算法
-- **检索增强生成 (RAG)**：结合知识图谱实现精准高效的 AI 问答服务
-- **Neo4j 图数据库**：存储糖尿病专业知识
-- **Deepseek-R1 模型**：提供专业详细的医学信息回答
+- 传智杯全国 IT 技能大赛 Web 网页开发挑战赛 B 组国赛一等奖
+- 获得“知糖助手平台 V1.0”计算机软件著作权
+- 完成 Web 端、移动端、后台管理端和 AI 问答能力的完整闭环
+- 结合糖尿病知识图谱、DeepSeek 问答和个性化推荐算法，探索慢病管理场景下的 AI 应用落地
 
-### 🌐 多端支持
+![知糖助手平台 V1.0 软件著作权](.assets/readme/software-copyright.png)
 
-#### Web 端功能
-- 🏥 **医疗资源整合**：医院定位、搜索等医疗帮助功能
-- 🧠 **知识图谱 AI 问答**：专业糖尿病知识咨询
-- 🍎 **饮食建议**：个性化营养推荐
-- 👥 **社交互动**：患者社区交流平台
-![alt text](.assets/web.png)
-#### 移动端功能
-- 📊 **健康数据管理**：血糖、运动、用药记录
-- 🤖 **AI 智能问答**：24/7 健康咨询服务
-- ⚠️ **血糖预警**：实时监控异常提醒
-- 💰 **便捷充值**：账户管理和虚拟币系统
+## 我的职责
 
-![alt text](.assets/app.png)
-![.assets/app2.png](.assets/app2.png)
-#### 硬件机器人 - 知糖小助手
-- 🗣️ **多语言交互**：语音对话功能
-- 🧠 **上下文记忆**：连贯对话体验
-- 📡 **双模网络接入**：稳定网络连接
+- 负责 Django 后端核心业务设计，完成用户、健康记录、文章内容、医院药品、商城支付、积分打卡等模块的数据管理和服务能力。
+- 负责 AI 问答与个性化推荐相关能力接入，围绕糖尿病知识图谱、DeepSeek、饮食运动推荐构建可落地的服务流程。
+- 负责 Web 端、移动端和后台管理端的功能联调，保证用户侧记录、问答、推荐、充值、社区互动和管理侧内容维护能够形成完整链路。
+- 参与项目文档、竞赛材料和演示内容整理，将系统背景、技术路线、成果证明和产品功能统一成可展示的校园项目经历。
 
-## 🏗️ 技术架构
+## 核心功能
 
-### 后端技术栈
-- **框架**：Django 3.2 + Django REST Framework
-- **数据库**：MySQL + Redis + Neo4j
-- **AI 模型**：DeepSeek API + 通义千问 API + Coze API
-- **任务队列**：Celery
-- **云存储**：阿里云 OSS
-- **支付**：支付宝沙箱
+### Web 信息平台
 
-### 前端技术栈
-- **Web 端**：Vue.js 3 + Vite + Three.js
-- **移动端**：原生 HTML5 + JavaScript
-- **UI 框架**：自定义响应式设计
-- **3D 效果**：Three.js 粒子系统和知识图谱可视化
+- 糖尿病科普内容和前沿资讯展示
+- 医院、医生、药品等医疗资源查询
+- 糖尿病知识图谱可视化
+- 饮食建议、推荐产品和社区交流入口
 
-### 数据安全
-- **加密算法**：AES-256 加密
-- **密钥管理**：分层管理体系
-- **环境变量**：敏感信息环境变量化
+![Web 首页](.assets/readme/web-home.png)
 
-## 🚀 快速开始
+### 移动端健康管理
+
+- 血糖、运动、用药等日常健康数据记录
+- 近 7 天血糖趋势和个人健康状态展示
+- 饮食推荐、图片识别和个性化控糖建议
+- 充值、订单、社区发帖、评论互动等用户功能
+
+![移动端饮食推荐](.assets/readme/mobile-diet.png)
+
+### AI 智能问答
+
+- 构建糖尿病领域知识图谱，沉淀疾病、症状、药品、检查项目、并发症等知识关系
+- 结合 DeepSeek 大模型和检索增强生成思路，为用户提供更贴合糖尿病场景的问答结果
+- 在通用问答之外引入专业知识约束，降低垂直医疗健康场景中的回答偏差
+
+![知识图谱展示](.assets/readme/knowledge-graph.png)
+
+### 后台管理
+
+- 用户、血糖、运动、用药、聊天记录等数据管理
+- 医院、药品、文章、每日推荐食物等内容维护
+- 价格策略、交易记录和用户等级管理
+- 管理端操作记录留存，方便追踪内容维护和业务数据变化
+
+![后台管理首页](.assets/readme/admin-dashboard.png)
+
+## 技术架构
+
+![系统架构图](.assets/readme/system-architecture.png)
+
+### 后端
+
+- Django 3.2 + Django REST Framework
+- MySQL 存储核心业务数据
+- Redis 支撑缓存和异步任务场景
+- Neo4j 存储糖尿病知识图谱
+- Celery 处理后台任务
+- 阿里云 OSS 管理演示视频和媒体资源
+
+### 前端
+
+- Vue 3 + Vite 构建 Web 端
+- Element Plus、ECharts、Three.js 支撑后台组件、数据可视化和图谱展示
+- 原生 HTML5 + JavaScript 构建移动端页面
+- Axios 统一处理前后端数据通信
+
+### AI 能力
+
+- NIPA 个性化控糖推荐思路：结合协同过滤和多层感知机，对患者健康特征与控糖方案进行适配度建模
+- 知识图谱问答：围绕糖尿病专业知识构建实体关系，并与 DeepSeek 问答能力结合
+- 图像识别与饮食建议：面向移动端饮食记录和控糖推荐场景，辅助用户理解食物含糖风险
+
+## 本地运行
 
 ### 环境要求
+
 - Python 3.9+
 - Node.js 16+
 - MySQL 8.0+
 - Redis 6.0+
+- Neo4j
 
-### 后端部署
+### 后端服务
 
-1. **克隆项目**
 ```bash
-git clone https://github.com/gogogo-a/blood.git
-cd blood-sugar-management/backed/Blood_Sugar
-```
-
-2. **安装依赖**
-```bash
+cd backed/Blood_Sugar
 pip install -r requirements.txt
-```
-
-3. **配置环境变量**
-```bash
 cp .env.example .env
-# 编辑 .env 文件，配置数据库、API 密钥等
-```
-
-4. **数据库迁移**
-```bash
-python manage.py makemigrations
 python manage.py migrate
-```
-
-5. **创建管理员**
-```bash
-python manage.py shell < scripts/init_admin.py
-```
-
-6. **启动服务**
-```bash
 python manage.py runserver 0.0.0.0:8000
 ```
 
-### 前端部署
+### Web 端
 
-#### Vue.js Web 端
 ```bash
 cd frontend/web_blood
 npm install
-npm run dev  # 开发环境
-npm run build  # 生产环境
+npm run dev
 ```
 
-#### 静态 HTML 移动端
+### 移动端页面
+
 ```bash
 cd frontend/blood_html
-# 直接部署到 Web 服务器即可
 ```
 
-## 📁 项目结构
+移动端为静态页面，可部署到 Web 服务器后访问。
 
-```
-blood-sugar-management/
-├── backed/Blood_Sugar/          # Django 后端
-│   ├── Blood_Sugar/            # 项目配置
-│   ├── User/                   # 用户管理
-│   ├── app/                    # 核心应用（血糖记录、AI问答）
-│   ├── Details/                # 内容管理（文章、食物）
-│   ├── payments/               # 支付模块
-│   ├── shop/                   # 健康商城
-│   ├── tools/                  # 工具模块（GI查询等）
-│   ├── quiz/                   # 健康问答
-│   ├── goals/                  # 目标管理
-│   ├── checkin/                # 打卡模块
-│   ├── robot/                  # 硬件机器人接口
-│   ├── utils/                  # 工具类
-│   ├── scripts/                # 脚本文件
-│   └── requirements.txt        # Python依赖
-├── frontend/
-│   ├── web_blood/              # Vue.js Web端
-│   │   ├── src/
-│   │   │   ├── views/          # 页面组件
-│   │   │   ├── components/     # 通用组件
-│   │   │   ├── api/            # API接口
-│   │   │   └── assets/         # 静态资源
-│   │   └── package.json
-│   └── blood_html/             # 移动端HTML
-│       ├── css/                # 样式文件
-│       ├── js/                 # JavaScript文件
-│       └── *.html              # 页面文件
+## 项目结构
+
+```text
+blood_sugar/
+├── backed/Blood_Sugar/       # Django 后端服务
+├── frontend/web_blood/       # Vue Web 端
+├── frontend/blood_html/      # 移动端静态页面
+├── .assets/readme/           # README 展示素材
 └── README.md
 ```
 
-## 🔧 配置说明
+## 后续可扩展方向
 
-### 环境变量配置
-详细的环境变量配置请参考 `backed/Blood_Sugar/.env.example` 文件：
+- 接入更多真实血糖设备，提升血糖数据采集的连续性
+- 强化个性化推荐模型，让饮食、运动和用药提醒更贴合不同用户状态
+- 扩展医生端或机构端能力，支持医生查看授权后的健康趋势与问答记录
+- 增强隐私保护、权限控制和数据脱敏流程，让系统更适合医疗健康场景长期使用
 
-- **数据库配置**：MySQL 连接信息
-- **Redis 配置**：缓存和消息队列
-- **AI API 配置**：DeepSeek、通义千问、Coze API 密钥
-- **云服务配置**：阿里云 OSS、支付宝等
-- **邮件配置**：SMTP 邮件服务
+## 项目信息
 
-### 安全检查
-运行安全检查脚本确保配置正确：
-```bash
-cd backed/Blood_Sugar
-python scripts/security_check.py
-```
-
-## 📊 功能模块
-
-### 🏥 医疗帮助
-- **医院定位**：基于地理位置的医院搜索
-- **药物查询**：糖尿病相关药物信息
-- **知识图谱**：交互式糖尿病知识可视化
-- **文档资料**：专业医学文献
-
-### 🤖 AI 智能服务
-- **个性化推荐**：基于用户数据的饮食运动建议
-- **智能问答**：24/7 专业健康咨询
-- **血糖预测**：基于历史数据的趋势分析
-- **异常预警**：实时监控和提醒
-
-### 📱 用户管理
-- **健康档案**：完整的个人健康数据
-- **数据记录**：血糖、运动、用药日志
-- **目标设定**：个性化健康目标管理
-- **社区互动**：患者经验分享平台
-
-### 🛒 增值服务
-- **健康商城**：糖尿病相关产品
-- **虚拟币系统**：积分奖励机制
-- **会员等级**：差异化服务体验
-- **支付系统**：安全便捷的在线支付
-
-## 🎯 商业模式
-
-- **订阅服务**：高级功能会员制
-- **硬件销售**：知糖小助手设备
-- **数据增值服务**：健康数据分析报告
-- **医疗合作**：与医疗机构合作付费服务
-- **广告与品牌合作**：健康品牌推广
-
-## 🔮 未来规划
-
-### 短期目标
-- [ ] 增加更多 AI 模型支持
-- [ ] 优化移动端用户体验
-- [ ] 扩展硬件设备功能
-- [ ] 增强数据安全措施
-
-### 长期愿景
-- [ ] 覆盖糖尿病管理全流程
-- [ ] 实现健康数据共享协作
-- [ ] 引入医生角色模块
-- [ ] 并发症监测与预防
-- [ ] 嵌入式硬件智能监控
-
-## 👥 开发团队
-
-- **耿浩** - 项目负责人 & 后端开发
-- **李悦欣** - 前端开发 & UI设计
-- **刁丽娟老师** - 指导老师
-
-## 🤝 合作支持
-
-### 学术合作
-- **学校信息中心**：服务器和实验室支持
-- **廊坊疾控中心**：数据合作
-- **滨州医学院公共卫生学院**：吕鹏教授团队合作
-
-### 应用部署
-- 社区医院应用部署
-- 医疗机构试点运行
-
-## 📞 联系我们
-
-- **开发者**：耿浩
-- **QQ**：2790159865
-- **邮箱**：2790159865@qq.com
-- **项目地址**：[GitHub Repository](https://github.com/gogogo-a/blood.git)
-
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 🙏 致谢
-
-感谢所有为本项目提供支持的老师、同学和合作伙伴，特别感谢：
-- 指导老师刁丽娟的专业指导
-- 学校团委的资源保障
-- 合作医疗机构的临床数据支持
-- 参与测试用户的宝贵反馈
-
----
-
-<div align="center">
-
-**让科技守护健康，让 AI 助力控糖** 💙
-
-</div>
+- 项目负责人：耿浩、李悦欣、陈千山
+- 指导老师：刁丽娟
+- 学校：北华航天工业学院
+- 仓库地址：[https://github.com/gogogo-a/blood.git](https://github.com/gogogo-a/blood.git)
+- 许可证：[MIT](LICENSE)
